@@ -16,6 +16,16 @@ public class Waluta {
     private ArrayList<String> krajePlatnicze;
 
     /**
+     * Konstruktor
+     *
+     * @param nazwa nazwa do ustawienia
+     */
+    public Waluta(String nazwa) {
+        this.nazwa = nazwa;
+        krajePlatnicze = new ArrayList<>();
+    }
+
+    /**
      * Gets nazwa
      *
      * @return nazwa

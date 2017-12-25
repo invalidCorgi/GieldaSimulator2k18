@@ -12,14 +12,15 @@ import java.util.ArrayList;
  * @author wojtekreg
  */
 public class Swiat {
-    ArrayList<GieldaPapierowWartosciowych> listaGield = new ArrayList<>();
-    ArrayList<RynekWalutowoSurowcowy> listaRynkowWalutowoSurowcowych = new ArrayList<>();
-    ArrayList<Spolka> listaSpolek = new ArrayList<>();
-    ArrayList<Surowiec> listaSurowcow = new ArrayList<>();
-    ArrayList<Waluta> listaWalut = new ArrayList<>();
-    ArrayList<ParaWalut> listaParWalut = new ArrayList<>();
-    ArrayList<Indeks> listaIndeksow = new ArrayList<>();
-    ArrayList<FunduszInwestycyjny> listaFunduszyInwestycyjnych = new ArrayList<>();
+    private ArrayList<GieldaPapierowWartosciowych> listaGield = new ArrayList<>();
+    private ArrayList<RynekWalutowoSurowcowy> listaRynkowWalutowoSurowcowych = new ArrayList<>();
+    private ArrayList<Spolka> listaSpolek = new ArrayList<>();
+    private ArrayList<Surowiec> listaSurowcow = new ArrayList<>();
+    private ArrayList<Waluta> listaWalut = new ArrayList<>();
+    private ArrayList<ParaWalut> listaParWalut = new ArrayList<>();
+    private ArrayList<Indeks> listaIndeksow = new ArrayList<>();
+    private ArrayList<FunduszInwestycyjny> listaFunduszyInwestycyjnych = new ArrayList<>();
+    private ArrayList<Inwestor> listaInwestorow = new ArrayList<>();
 
     /**
      * Gets listaGield
@@ -101,6 +102,4 @@ public class Swiat {
     public ArrayList<Inwestor> getListaInwestorow() {
         return listaInwestorow;
     }
-
-    ArrayList<Inwestor> listaInwestorow = new ArrayList<>();
 }

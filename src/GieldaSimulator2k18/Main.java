@@ -11,9 +11,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("MainStage.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setTitle("Giełda Symulator 2k18");
+        primaryStage.setMinWidth(640);
+        primaryStage.setMinHeight(480);
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        Swiat swiat = new Swiat();
     }
 
 
