@@ -7,15 +7,15 @@ import javafx.scene.control.ListView;
 
 public class ControlPanelController {
     @FXML
-    private ListView<String> MainListView;
+    private ListView<Aktywa> MainListView;
 
     private Swiat swiat;
-    public void initData(Swiat swiat, ObservableList<String> _list){
+    public void initData(Swiat swiat, ObservableList<Aktywa> _list){
         this.swiat=swiat;
-        ObservableList<String> list = _list;
-        for (int i=0; i<swiat.getListaWalut().size(); i++){
-            list.add(swiat.getListaWalut().get(i).getNazwa());
-        }
+        ObservableList<Aktywa> list = _list;
+        /*for (int i=0; i<swiat.getListaSpolek().size(); i++){
+            list.add(swiat.getListaSpolek().get(i));
+        }*/
         MainListView.setItems(list);
     }
 }

@@ -6,6 +6,9 @@
 package GieldaSimulator2k18;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -14,15 +17,27 @@ import java.util.ArrayList;
 public class Waluta {
     private String nazwa;
     private ArrayList<String> krajePlatnicze;
+    private static List<String> nazwy = new ArrayList<>(
+            Arrays.asList("złoty", "dolar", "euro", "yen")
+    );
 
     /**
      * Konstruktor
      *
-     * @param nazwa nazwa do ustawienia
+     * @param random generator pseudolosowy
      */
-    public Waluta(String nazwa) {
-        this.nazwa = nazwa;
+    public Waluta(Random random) {
+        if (nazwy.size()>0) {
+            nazwa = nazwy.get(random.nextInt(nazwy.size()));
+            nazwy.remove(getNazwa());
+        }
+        else nazwa = "wszystkie zajęte";
         krajePlatnicze = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return nazwa;
     }
 
     /**

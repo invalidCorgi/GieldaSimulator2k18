@@ -6,6 +6,9 @@
 package GieldaSimulator2k18;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -17,7 +20,20 @@ public class Spolka extends Aktywa{
     private double przychod;
     private double kapitalWlasny;
     private double kapitalZakladowy;
-    private ArrayList<Indeks> listaIndeksow = new ArrayList<>();
+    private List<Indeks> listaIndeksow;
+    private static List<String> nazwy = new ArrayList<>(
+            Arrays.asList("MikroShit", "Ajpul", "BiegaGames", "InvalidCorgiGames")
+    );
+
+    public Spolka(Random random) {
+        super(random, nazwy);
+        this.liczbaAkcji = random.nextInt(50)+10;
+        this.zysk = 0;
+        this.przychod = 0;
+        this.kapitalZakladowy = 5000 + random.nextDouble()*20000;
+        this.kapitalWlasny = kapitalZakladowy + random.nextDouble()*100000;
+        this.listaIndeksow = new ArrayList<>();
+    }
 
     /**
      * Gets liczbaAkcji
@@ -114,7 +130,8 @@ public class Spolka extends Aktywa{
      *
      * @return listaIndeksow
      */
-    public ArrayList<Indeks> getListaIndeksow() {
+    public List<Indeks> getListaIndeksow() {
         return listaIndeksow;
     }
+
 }

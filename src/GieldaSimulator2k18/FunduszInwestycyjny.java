@@ -9,7 +9,7 @@ package GieldaSimulator2k18;
  *
  * @author wojtekreg
  */
-public class FunduszInwestycyjny extends PodmiotInwestujacy{
+public class FunduszInwestycyjny extends PodmiotInwestujacy implements Runnable{
     private String nazwa;
 
     /**
@@ -28,5 +28,10 @@ public class FunduszInwestycyjny extends PodmiotInwestujacy{
      */
     public void setNazwa(String nazwa) {
         this.nazwa = nazwa;
+    }
+
+    @Override
+    public void run() {
+
     }
 }

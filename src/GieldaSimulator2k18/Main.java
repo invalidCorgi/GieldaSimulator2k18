@@ -14,9 +14,8 @@ public class Main extends Application {
         primaryStage.setTitle("Giełda Symulator 2k18");
         primaryStage.setMinWidth(640);
         primaryStage.setMinHeight(480);
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(new Scene(root,640,480));
         primaryStage.show();
-        Swiat swiat = new Swiat();
     }
 
 

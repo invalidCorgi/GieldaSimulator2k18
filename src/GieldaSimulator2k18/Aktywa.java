@@ -7,7 +7,9 @@ package GieldaSimulator2k18;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -16,15 +18,42 @@ import java.util.List;
 public abstract class Aktywa {
     private String nazwa;
     private LocalDateTime dataPierwszejWyceny;
-    private Double kursOtwarcia;
-    private Double kursMinimalny;
-    private Double kursMaksymalny;
-    private Double kursAktualny;
-    private Double wolumen;
-    private Double obroty;
+    private double kursOtwarcia;
+    private double kursMinimalny;
+    private double kursMaksymalny;
+    private double kursAktualny;
+    private double wolumen;
+    private double obroty;
     private List<WpisHistorii> historiaKursu;
-    private Long liczbaKupujacych;
-    private Long liczbaSprzedajacych;
+    private int liczbaKupujacych;
+    private int liczbaSprzedajacych;
+
+    public Aktywa(Random random) {
+        dataPierwszejWyceny = LocalDateTime.now();
+        kursOtwarcia = random.nextDouble()*10;
+        kursMinimalny = kursOtwarcia;
+        kursMaksymalny = kursOtwarcia;
+        kursAktualny = kursOtwarcia;
+        wolumen = 0;
+        obroty = 0;
+        historiaKursu = new ArrayList<>();
+        liczbaKupujacych = 0;
+        liczbaSprzedajacych = 0;
+    }
+
+    public Aktywa(Random random, List<String> nazwy) {
+        this(random);
+        if (nazwy.size()>0) {
+            nazwa = nazwy.get(random.nextInt(nazwy.size()));
+            nazwy.remove(getNazwa());
+        }
+        else nazwa = "wszystkie zajęte";
+    }
+
+    @Override
+    public String toString() {
+        return nazwa;
+    }
 
     /**
      * Gets nazwa
@@ -193,7 +222,7 @@ public abstract class Aktywa {
      *
      * @return liczbaKupujacych
      */
-    public Long getLiczbaKupujacych() {
+    public int getLiczbaKupujacych() {
         return liczbaKupujacych;
     }
 
@@ -202,7 +231,7 @@ public abstract class Aktywa {
      *
      * @param liczbaKupujacych liczbaKupujacych to set
      */
-    public void setLiczbaKupujacych(Long liczbaKupujacych) {
+    public void setLiczbaKupujacych(int liczbaKupujacych) {
         this.liczbaKupujacych = liczbaKupujacych;
     }
 
@@ -211,7 +240,7 @@ public abstract class Aktywa {
      *
      * @return liczbaSprzedajacych
      */
-    public Long getLiczbaSprzedajacych() {
+    public int getLiczbaSprzedajacych() {
         return liczbaSprzedajacych;
     }
 
@@ -220,7 +249,7 @@ public abstract class Aktywa {
      *
      * @param liczbaSprzedajacych liczbaSprzedajacych to set
      */
-    public void setLiczbaSprzedajacych(Long liczbaSprzedajacych) {
+    public void setLiczbaSprzedajacych(int liczbaSprzedajacych) {
         this.liczbaSprzedajacych = liczbaSprzedajacych;
     }
 

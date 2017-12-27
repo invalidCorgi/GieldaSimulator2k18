@@ -5,12 +5,25 @@
  */
 package GieldaSimulator2k18;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 /**
  *
  * @author wojtekreg
  */
 public class ParaWalut extends Aktywa{
+    private Waluta glownaWaluta;
     private Waluta drugaWaluta;
+
+    public ParaWalut(Random random, Waluta glownaWaluta, Waluta drugaWaluta) {
+        super(random);
+        this.glownaWaluta = glownaWaluta;
+        this.drugaWaluta = drugaWaluta;
+        setNazwa(glownaWaluta.getNazwa()+"/"+drugaWaluta.getNazwa());
+    }
 
     /**
      * Gets drugaWaluta
@@ -28,5 +41,23 @@ public class ParaWalut extends Aktywa{
      */
     public void setDrugaWaluta(Waluta drugaWaluta) {
         this.drugaWaluta = drugaWaluta;
+    }
+
+    /**
+     * Gets glownaWaluta
+     *
+     * @return glownaWaluta
+     */
+    public Waluta getGlownaWaluta() {
+        return glownaWaluta;
+    }
+
+    /**
+     * Sets glownaWaluta
+     *
+     * @param glownaWaluta glownaWaluta to set
+     */
+    public void setGlownaWaluta(Waluta glownaWaluta) {
+        this.glownaWaluta = glownaWaluta;
     }
 }

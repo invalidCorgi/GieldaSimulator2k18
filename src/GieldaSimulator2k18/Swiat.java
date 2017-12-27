@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author wojtekreg
  */
 public class Swiat {
-    private ArrayList<GieldaPapierowWartosciowych> listaGield = new ArrayList<>();
+    private static final ArrayList<GieldaPapierowWartosciowych> listaGield = new ArrayList<>();
     private ArrayList<RynekWalutowoSurowcowy> listaRynkowWalutowoSurowcowych = new ArrayList<>();
     private ArrayList<Spolka> listaSpolek = new ArrayList<>();
     private ArrayList<Surowiec> listaSurowcow = new ArrayList<>();
