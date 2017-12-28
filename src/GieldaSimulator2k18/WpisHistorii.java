@@ -15,6 +15,11 @@ public class WpisHistorii {
     private LocalDateTime czas;
     private double kurs;
 
+    public WpisHistorii(LocalDateTime czas, double kurs) {
+        this.czas = czas;
+        this.kurs = kurs;
+    }
+
     /**
      * Gets czas
      *

@@ -6,6 +6,9 @@
 package GieldaSimulator2k18;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -17,6 +20,13 @@ public class GieldaPapierowWartosciowych extends Rynek{
     private String adresSiedziby;
     private ArrayList<Spolka> listaSpolek = new ArrayList<>();
     private ArrayList<Indeks> listaIndeksow = new ArrayList<>();
+    private static List<String> nazwy = new ArrayList<>(
+            Arrays.asList("Łol Strit")
+    );
+
+    public GieldaPapierowWartosciowych(Random random, Waluta waluta) {
+        super(random, waluta,nazwy);
+    }
 
     /**
      * Gets kraj

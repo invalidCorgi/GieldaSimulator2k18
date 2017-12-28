@@ -6,14 +6,21 @@
 package GieldaSimulator2k18;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
  * @author wojtekreg
  */
 public class RynekWalutowoSurowcowy extends Rynek{
-    private ArrayList<ParaWalut> listaParWalut = new ArrayList<>();
-    private ArrayList<Surowiec> listaSurowcow = new ArrayList<>();
+    private ArrayList<ParaWalut> listaParWalut;
+    private ArrayList<Surowiec> listaSurowcow;
+
+    public RynekWalutowoSurowcowy(Random random, Waluta waluta) {
+        super(random,waluta,"Rynek "+waluta);
+        listaParWalut = new ArrayList<>();
+        listaSurowcow = new ArrayList<>();
+    }
 
     /**
      * Gets listaParWalut

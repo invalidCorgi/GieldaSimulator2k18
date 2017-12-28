@@ -37,6 +37,7 @@ public abstract class Aktywa {
         wolumen = 0;
         obroty = 0;
         historiaKursu = new ArrayList<>();
+        historiaKursu.add(new WpisHistorii(dataPierwszejWyceny,kursOtwarcia));
         liczbaKupujacych = 0;
         liczbaSprzedajacych = 0;
     }

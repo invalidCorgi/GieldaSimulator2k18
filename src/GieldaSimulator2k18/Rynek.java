@@ -5,6 +5,9 @@
  */
 package GieldaSimulator2k18;
 
+import java.util.List;
+import java.util.Random;
+
 /**
  *
  * @author wojtekreg
@@ -13,6 +16,30 @@ public class Rynek {
     private String nazwa;
     private Waluta waluta;
     private double marzaProcentowa;
+
+    public Rynek(Random random, Waluta waluta) {
+        this.waluta = waluta;
+        marzaProcentowa = random.nextDouble();
+    }
+
+    public Rynek(Random random, Waluta waluta, String nazwa) {
+        this(random,waluta);
+        this.nazwa = nazwa;
+    }
+
+    public Rynek(Random random, Waluta waluta, List<String> nazwy) {
+        this(random,waluta);
+        if (nazwy.size()>0) {
+            nazwa = nazwy.get(random.nextInt(nazwy.size()));
+            nazwy.remove(getNazwa());
+        }
+        else nazwa = "wszystkie zajęte";
+    }
+
+    @Override
+    public String toString() {
+        return nazwa;
+    }
 
     /**
      * Gets nazwa

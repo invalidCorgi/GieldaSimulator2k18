@@ -6,17 +6,37 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.*;
 import javafx.scene.control.ListView;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+
+import static java.lang.Thread.sleep;
 
 public class AktywaInformationPreviewController {
     @FXML
     private ListView<String> InformationListView;
+    @FXML
+    private LineChart<String,Number> KursLineGraph;
 
-    public void initData(Aktywa aktywa){
+    public void initData(Aktywa aktywa) throws InterruptedException {
+
+        aktywa.getHistoriaKursu().add(new WpisHistorii(LocalDateTime.now(),10));
+        sleep(1000);
+        aktywa.getHistoriaKursu().add(new WpisHistorii(LocalDateTime.now(),6));
+        sleep(1000);
+        aktywa.getHistoriaKursu().add(new WpisHistorii(LocalDateTime.now(),8));
+        sleep(1000);
+        aktywa.getHistoriaKursu().add(new WpisHistorii(LocalDateTime.now(),9));
+        aktywa.setKursAktualny(9.0);
+        aktywa.setKursMaksymalny(10.0);
+
         ObservableList<String> list = FXCollections.observableArrayList();
         InformationListView.setItems(list);
         list.add("Nazwa: "+aktywa.getNazwa());
-        list.add("Data pierwszej wyceny: "+aktywa.getDataPierwszejWyceny());
+        list.add("Data pierwszej wyceny: "+aktywa.getDataPierwszejWyceny().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
         list.add("Kurs aktualny: "+aktywa.getKursAktualny());
         list.add("Kurs otwarcia: "+aktywa.getKursOtwarcia());
         list.add("Kurs minimalny: "+aktywa.getKursMinimalny());
@@ -42,5 +62,16 @@ public class AktywaInformationPreviewController {
                 }
             }
         }
+
+        NumberAxis yAxis = new NumberAxis();
+        CategoryAxis xAxis = new CategoryAxis();
+        //KursLineGraph = new LineChart<Number,Number>(xAxis,yAxis);
+        XYChart.Series series = new XYChart.Series();
+        series.setName("kurs");
+        for (int i=0;i<aktywa.getHistoriaKursu().size();i++) {
+            series.getData().add(new XYChart.Data(aktywa.getHistoriaKursu().get(i).getCzas().format(DateTimeFormatter.ofPattern("dd-MM-yyyy\nHH:mm:ss")),aktywa.getHistoriaKursu().get(i).getKurs()));//aktywa.getHistoriaKursu().get(i).getCzas().toEpochSecond(ZoneOffset.UTC)));
+        }
+        KursLineGraph.getData().add(series);
+        //KursLineGraph = new LineChart<Number, Number>()
     }
 }

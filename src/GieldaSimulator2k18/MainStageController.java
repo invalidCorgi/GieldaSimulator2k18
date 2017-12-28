@@ -18,8 +18,9 @@ public class MainStageController {
     @FXML
     private ListView<Aktywa> MainListView;
 
-    private Swiat swiat = new Swiat();
-    private Random random = new Random();
+    private Swiat swiat;
+    private Random random;
+    private ObservableList<Aktywa> list;
 
     /**
      *
@@ -28,27 +29,6 @@ public class MainStageController {
      */
     @FXML
     private void OpenControlPanel() throws IOException {
-        swiat.getListaWalut().add(new Waluta(random));
-        swiat.getListaWalut().add(new Waluta(random));
-        swiat.getListaWalut().add(new Waluta(random));
-        for (int i=0;i<2;i++)
-        {
-            swiat.getListaSpolek().add(new Spolka(random));
-            swiat.getListaParWalut().add(new ParaWalut(random,swiat.getListaWalut().get(random.nextInt(swiat.getListaWalut().size())),swiat.getListaWalut().get(random.nextInt(swiat.getListaWalut().size()))));
-            swiat.getListaSurowcow().add(new Surowiec(random,swiat.getListaWalut()));
-        }
-        ObservableList<Aktywa> list = FXCollections.observableArrayList();
-        MainListView.setItems(list);
-
-        for (int i=0; i<swiat.getListaSpolek().size(); i++){
-            list.add(swiat.getListaSpolek().get(i));
-        }
-        for (int i=0; i<swiat.getListaParWalut().size(); i++){
-            list.add(swiat.getListaParWalut().get(i));
-        }
-        for (int i=0; i<swiat.getListaSurowcow().size(); i++){
-            list.add(swiat.getListaSurowcow().get(i));
-        }
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ControlPanel.fxml"));
         stage.setTitle("Panel kontrolny");
@@ -57,13 +37,13 @@ public class MainStageController {
         stage.setScene(new Scene(loader.load()));
 
         ControlPanelController controller = loader.getController();
-        controller.initData(swiat,list);
+        controller.initData(swiat,list,random);
 
         stage.show();
     }
 
     @FXML
-    private void ShowElementInformation() throws IOException {
+    private void ShowElementInformation() throws IOException, InterruptedException {
         if (MainListView.getSelectionModel().getSelectedItem()!=null) {
             System.out.println("clicked on " + MainListView.getSelectionModel().getSelectedItem());
             Stage stage = new Stage();
@@ -78,5 +58,12 @@ public class MainStageController {
 
             stage.show();
         }
+    }
+
+    public void initData(){
+        list = FXCollections.observableArrayList();
+        MainListView.setItems(list);
+        swiat = new Swiat();
+        random = new Random();
     }
 }
