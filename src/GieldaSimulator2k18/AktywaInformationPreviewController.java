@@ -63,8 +63,8 @@ public class AktywaInformationPreviewController {
             }
         }
 
-        NumberAxis yAxis = new NumberAxis();
-        CategoryAxis xAxis = new CategoryAxis();
+        //NumberAxis yAxis = new NumberAxis();
+        //CategoryAxis xAxis = new CategoryAxis();
         //KursLineGraph = new LineChart<Number,Number>(xAxis,yAxis);
         XYChart.Series series = new XYChart.Series();
         series.setName("kurs");
@@ -72,6 +72,12 @@ public class AktywaInformationPreviewController {
             series.getData().add(new XYChart.Data(aktywa.getHistoriaKursu().get(i).getCzas().format(DateTimeFormatter.ofPattern("dd-MM-yyyy\nHH:mm:ss")),aktywa.getHistoriaKursu().get(i).getKurs()));//aktywa.getHistoriaKursu().get(i).getCzas().toEpochSecond(ZoneOffset.UTC)));
         }
         KursLineGraph.getData().add(series);
+        XYChart.Series series2 = new XYChart.Series();
+        series2.setName("kurs2");
+        for (int i=0;i<aktywa.getHistoriaKursu().size();i++) {
+            series2.getData().add(new XYChart.Data(aktywa.getHistoriaKursu().get(i).getCzas().format(DateTimeFormatter.ofPattern("dd-MM-yyyy\nHH:mm:ss")),aktywa.getHistoriaKursu().get(i).getKurs()-1));//aktywa.getHistoriaKursu().get(i).getCzas().toEpochSecond(ZoneOffset.UTC)));
+        }
+        KursLineGraph.getData().add(series2);
         //KursLineGraph = new LineChart<Number, Number>()
     }
 }

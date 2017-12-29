@@ -3,9 +3,13 @@ package GieldaSimulator2k18;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class ControlPanelController {
@@ -141,6 +145,24 @@ public class ControlPanelController {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION,"Nie możesz utworzyć więcej surowców");
                 alert.show();
             }
+        }
+    }
+
+    @FXML
+    private void ShowElementInformation() throws IOException {
+        if (MainListView.getSelectionModel().getSelectedItem()!=null) {
+            System.out.println("clicked on " + MainListView.getSelectionModel().getSelectedItem());
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ObjectInformationPreview.fxml"));
+            stage.setTitle(MainListView.getSelectionModel().getSelectedItem() + " - informacje");
+            stage.setMinWidth(640);
+            stage.setMinHeight(480);
+            stage.setScene(new Scene(loader.load()));
+
+            ObjectInformationPreviewController controller = loader.getController();
+            controller.initData(MainListView.getSelectionModel().getSelectedItem());
+
+            stage.show();
         }
     }
 
