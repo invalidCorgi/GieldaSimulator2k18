@@ -5,11 +5,13 @@
  */
 package GieldaSimulator2k18;
 
+import java.io.Serializable;
+
 /**
  *
  * @author wojtekreg
  */
-public class Inwestor extends PodmiotInwestujacy implements Runnable{
+public class Inwestor extends PodmiotInwestujacy implements Runnable, Serializable{
     private String pesel;
     private double budzet;
 

@@ -5,6 +5,7 @@
  */
 package GieldaSimulator2k18;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Random;
  *
  * @author wojtekreg
  */
-public class ParaWalut extends Aktywa{
+public class ParaWalut extends Aktywa implements Serializable{
     private Waluta glownaWaluta;
     private Waluta drugaWaluta;
 
@@ -22,7 +23,7 @@ public class ParaWalut extends Aktywa{
         super(random);
         this.glownaWaluta = glownaWaluta;
         this.drugaWaluta = drugaWaluta;
-        setNazwa(glownaWaluta.getNazwa()+"/"+drugaWaluta.getNazwa());
+        setNazwa(drugaWaluta.getNazwa()+"/"+glownaWaluta.getNazwa());
     }
 
     /**

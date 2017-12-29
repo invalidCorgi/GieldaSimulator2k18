@@ -5,11 +5,13 @@
  */
 package GieldaSimulator2k18;
 
+import java.io.Serializable;
+
 /**
  *
  * @author wojtekreg
  */
-public class PodmiotInwestujacy {
+public class PodmiotInwestujacy implements Serializable{
     private String imie;
     private String nazwisko;
 

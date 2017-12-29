@@ -5,6 +5,7 @@
  */
 package GieldaSimulator2k18;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Random;
  *
  * @author wojtekreg
  */
-public class Spolka extends Aktywa{
+public class Spolka extends Aktywa implements Serializable{
     private int liczbaAkcji;
     private double zysk;
     private double przychod;
@@ -25,7 +26,16 @@ public class Spolka extends Aktywa{
             Arrays.asList("MikroShit", "Ajpul", "BiegaGames", "InvalidCorgiGames")
     );
 
-    public Spolka(Random random) {
+    /**
+     * Gets nazwy
+     *
+     * @return nazwy
+     */
+    public static List<String> getNazwy() {
+        return nazwy;
+    }
+
+    public Spolka(Random random) throws Exception {
         super(random, nazwy);
         this.liczbaAkcji = random.nextInt(50)+10;
         this.zysk = 0;

@@ -5,13 +5,14 @@
  */
 package GieldaSimulator2k18;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  *
  * @author wojtekreg
  */
-public class WpisHistorii {
+public class WpisHistorii implements Serializable{
     private LocalDateTime czas;
     private double kurs;
 

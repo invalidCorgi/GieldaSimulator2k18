@@ -5,13 +5,14 @@
  */
 package GieldaSimulator2k18;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author wojtekreg
  */
-public class Indeks {
+public class Indeks implements Serializable{
     private String nazwa;
     private ArrayList<Spolka> listaSpolek = new ArrayList<>();
     double lacznaWartosc;

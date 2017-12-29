@@ -75,18 +75,25 @@ public class ControlPanelController {
 
     @FXML
     private void dodajWalute(){
-        Waluta waluta = new Waluta(random);
-        for (int i=0;i<swiat.getListaRynkowWalutowoSurowcowych().size();i++){
-            swiat.getListaRynkowWalutowoSurowcowych().get(i).getListaParWalut().add(new ParaWalut(random,swiat.getListaRynkowWalutowoSurowcowych().get(i).getWaluta(),waluta));
+        try {
+            Waluta waluta = new Waluta(random);
+            for (int i = 0; i < swiat.getListaRynkowWalutowoSurowcowych().size(); i++) {
+                swiat.getListaRynkowWalutowoSurowcowych().get(i).getListaParWalut().add(new ParaWalut(random, swiat.getListaRynkowWalutowoSurowcowych().get(i).getWaluta(), waluta));
+            }
+            RynekWalutowoSurowcowy rynekWalutowoSurowcowy = new RynekWalutowoSurowcowy(random, waluta);
+            waluta.setRynekWalutowoSurowcowy(rynekWalutowoSurowcowy);
+            for (int i = 0; i < swiat.getListaWalut().size(); i++) {
+                rynekWalutowoSurowcowy.getListaParWalut().add(new ParaWalut(random, waluta, swiat.getListaWalut().get(i)));
+            }
+            swiat.getListaRynkowWalutowoSurowcowych().add(rynekWalutowoSurowcowy);
+            swiat.getListaWalut().add(waluta);
+            lista.add(waluta);
+            lista.add(rynekWalutowoSurowcowy);
         }
-        RynekWalutowoSurowcowy rynekWalutowoSurowcowy = new RynekWalutowoSurowcowy(random,waluta);
-        for (int i=0;i<swiat.getListaWalut().size();i++){
-            rynekWalutowoSurowcowy.getListaParWalut().add(new ParaWalut(random,waluta,swiat.getListaWalut().get(i)));
+        catch (Exception ex){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION,"Nie możesz utworzyć więcej walut");
+            alert.show();
         }
-        swiat.getListaRynkowWalutowoSurowcowych().add(rynekWalutowoSurowcowy);
-        swiat.getListaWalut().add(waluta);
-        lista.add(waluta);
-        lista.add(rynekWalutowoSurowcowy);
     }
 
     @FXML
@@ -96,11 +103,17 @@ public class ControlPanelController {
             alert.show();
         }
         else {
-            Spolka spolka = new Spolka(random);
-            swiat.getListaGield().get(random.nextInt(swiat.getListaGield().size())).getListaSpolek().add(spolka);
-            swiat.getListaSpolek().add(spolka);
-            lista.add(spolka);
-            listaMain.add(spolka);
+            try {
+                Spolka spolka = new Spolka(random);
+                swiat.getListaGield().get(random.nextInt(swiat.getListaGield().size())).getListaSpolek().add(spolka);
+                swiat.getListaSpolek().add(spolka);
+                lista.add(spolka);
+                listaMain.add(spolka);
+            }
+            catch (Exception ex){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,"Nie możesz utworzyć więcej spółek");
+                alert.show();
+            }
         }
     }
 
@@ -111,16 +124,23 @@ public class ControlPanelController {
             alert.show();
         }
         else {
-            Surowiec surowiec = new Surowiec(random,swiat.getListaWalut());
-            for (int i=0;i<swiat.getListaRynkowWalutowoSurowcowych().size();i++){
-                if (swiat.getListaRynkowWalutowoSurowcowych().get(i).getWaluta()==surowiec.getWalutaNotowania()){
-                    swiat.getListaRynkowWalutowoSurowcowych().get(i).getListaSurowcow().add(surowiec);
-                    break;
+            try {
+                Surowiec surowiec = new Surowiec(random, swiat.getListaWalut());
+                for (int i = 0; i < swiat.getListaRynkowWalutowoSurowcowych().size(); i++) {
+                    if (swiat.getListaRynkowWalutowoSurowcowych().get(i).getWaluta() == surowiec.getWalutaNotowania()) {
+                        swiat.getListaRynkowWalutowoSurowcowych().get(i).getListaSurowcow().add(surowiec);
+                        break;
+                    }
                 }
+                surowiec.getWalutaNotowania().getRynekWalutowoSurowcowy().getListaSurowcow().add(surowiec);
+                swiat.getListaSurowcow().add(surowiec);
+                lista.add(surowiec);
+                listaMain.add(surowiec);
             }
-            swiat.getListaSurowcow().add(surowiec);
-            lista.add(surowiec);
-            listaMain.add(surowiec);
+            catch (Exception ex){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,"Nie możesz utworzyć więcej surowców");
+                alert.show();
+            }
         }
     }
 

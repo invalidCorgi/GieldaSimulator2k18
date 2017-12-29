@@ -5,6 +5,7 @@
  */
 package GieldaSimulator2k18;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Random;
  *
  * @author wojtekreg
  */
-public class GieldaPapierowWartosciowych extends Rynek{
+public class GieldaPapierowWartosciowych extends Rynek implements Serializable{
     private String kraj;
     private String miasto;
     private String adresSiedziby;
@@ -26,6 +27,15 @@ public class GieldaPapierowWartosciowych extends Rynek{
 
     public GieldaPapierowWartosciowych(Random random, Waluta waluta) {
         super(random, waluta,nazwy);
+    }
+
+    /**
+     * Gets nazwy
+     *
+     * @return nazwy
+     */
+    public static List<String> getNazwy() {
+        return nazwy;
     }
 
     /**

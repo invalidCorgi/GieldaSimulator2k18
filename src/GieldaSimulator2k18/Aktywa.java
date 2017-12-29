@@ -5,6 +5,7 @@
  */
 package GieldaSimulator2k18;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +16,7 @@ import java.util.Random;
  *
  * @author wojtekreg
  */
-public abstract class Aktywa {
+public abstract class Aktywa implements Serializable{
     private String nazwa;
     private LocalDateTime dataPierwszejWyceny;
     private double kursOtwarcia;
@@ -42,13 +43,13 @@ public abstract class Aktywa {
         liczbaSprzedajacych = 0;
     }
 
-    public Aktywa(Random random, List<String> nazwy) {
+    public Aktywa(Random random, List<String> nazwy) throws Exception {
         this(random);
         if (nazwy.size()>0) {
             nazwa = nazwy.get(random.nextInt(nazwy.size()));
             nazwy.remove(getNazwa());
         }
-        else nazwa = "wszystkie zajęte";
+        else throw new Exception();
     }
 
     @Override

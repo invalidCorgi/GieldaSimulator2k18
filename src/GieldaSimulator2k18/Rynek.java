@@ -5,6 +5,7 @@
  */
 package GieldaSimulator2k18;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
@@ -12,7 +13,7 @@ import java.util.Random;
  *
  * @author wojtekreg
  */
-public class Rynek {
+public class Rynek implements Serializable{
     private String nazwa;
     private Waluta waluta;
     private double marzaProcentowa;

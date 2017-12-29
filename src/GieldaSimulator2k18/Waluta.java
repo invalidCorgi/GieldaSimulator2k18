@@ -5,6 +5,7 @@
  */
 package GieldaSimulator2k18;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,24 +15,52 @@ import java.util.Random;
  *
  * @author wojtekreg
  */
-public class Waluta {
+public class Waluta implements Serializable{
     private String nazwa;
     private ArrayList<String> krajePlatnicze;
     private static List<String> nazwy = new ArrayList<>(
             Arrays.asList("złoty", "dolar", "euro", "yen")
     );
+    private RynekWalutowoSurowcowy rynekWalutowoSurowcowy;
+
+    /**
+     * Gets nazwy
+     *
+     * @return nazwy
+     */
+    public static List<String> getNazwy() {
+        return nazwy;
+    }
+
+    /**
+     * Gets rynekWalutowoSurowcowy
+     *
+     * @return rynekWalutowoSurowcowy
+     */
+    public RynekWalutowoSurowcowy getRynekWalutowoSurowcowy() {
+        return rynekWalutowoSurowcowy;
+    }
+
+    /**
+     * Sets rynekWalutowoSurowcowy
+     *
+     * @param rynekWalutowoSurowcowy rynekWalutowoSurowcowy to set
+     */
+    public void setRynekWalutowoSurowcowy(RynekWalutowoSurowcowy rynekWalutowoSurowcowy) {
+        this.rynekWalutowoSurowcowy = rynekWalutowoSurowcowy;
+    }
 
     /**
      * Konstruktor
      *
      * @param random generator pseudolosowy
      */
-    public Waluta(Random random) {
+    public Waluta(Random random) throws Exception {
         if (nazwy.size()>0) {
             nazwa = nazwy.get(random.nextInt(nazwy.size()));
             nazwy.remove(getNazwa());
         }
-        else nazwa = "wszystkie zajęte";
+        else throw new Exception();
         krajePlatnicze = new ArrayList<>();
     }
 

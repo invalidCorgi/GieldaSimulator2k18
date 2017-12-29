@@ -5,13 +5,14 @@
  */
 package GieldaSimulator2k18;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author wojtekreg
  */
-public class Swiat {
+public class Swiat implements Serializable{
     private static final ArrayList<GieldaPapierowWartosciowych> listaGield = new ArrayList<>();
     private ArrayList<RynekWalutowoSurowcowy> listaRynkowWalutowoSurowcowych = new ArrayList<>();
     private ArrayList<Spolka> listaSpolek = new ArrayList<>();

@@ -19,9 +19,9 @@ public class Main extends Application {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainStage.fxml"));
         stage.setTitle("Giełda Simulator 2k18");
-        stage.setMinWidth(640);
+        stage.setMinWidth(700);
         stage.setMinHeight(480);
-        stage.setScene(new Scene(loader.load(),640,480));
+        stage.setScene(new Scene(loader.load(),700,480));
 
         MainStageController controller = loader.getController();
         controller.initData();

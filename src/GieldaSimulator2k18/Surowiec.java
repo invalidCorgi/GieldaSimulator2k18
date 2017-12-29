@@ -5,6 +5,7 @@
  */
 package GieldaSimulator2k18;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Random;
  *
  * @author wojtekreg
  */
-public class Surowiec extends Aktywa{
+public class Surowiec extends Aktywa implements Serializable{
     private String jednostkaHandlowa;
     private Waluta walutaNotowania;
     private static List<String> nazwy = new ArrayList<>(
@@ -24,10 +25,28 @@ public class Surowiec extends Aktywa{
             Arrays.asList("baryłki", "uncje")
     );
 
-    public Surowiec(Random random, List<Waluta> waluty) {
+    public Surowiec(Random random, List<Waluta> waluty) throws Exception {
         super(random, nazwy);
         walutaNotowania = waluty.get(random.nextInt(waluty.size()));
         jednostkaHandlowa = jednostkiHandlowe.get(random.nextInt(jednostkiHandlowe.size()));
+    }
+
+    /**
+     * Gets nazwy
+     *
+     * @return nazwy
+     */
+    public static List<String> getNazwy() {
+        return nazwy;
+    }
+
+    /**
+     * Gets jednostkiHandlowe
+     *
+     * @return jednostkiHandlowe
+     */
+    public static List<String> getJednostkiHandlowe() {
+        return jednostkiHandlowe;
     }
 
     /**

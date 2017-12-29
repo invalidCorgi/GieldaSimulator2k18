@@ -5,11 +5,13 @@
  */
 package GieldaSimulator2k18;
 
+import java.io.Serializable;
+
 /**
  *
  * @author wojtekreg
  */
-public class IndeksNajwiekszychSpolek extends Indeks{
+public class IndeksNajwiekszychSpolek extends Indeks implements Serializable{
     private int iloscSpolek;
 
     /**
