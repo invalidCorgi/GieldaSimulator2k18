@@ -82,12 +82,20 @@ public class ControlPanelController {
         try {
             Waluta waluta = new Waluta(random);
             for (int i = 0; i < swiat.getListaRynkowWalutowoSurowcowych().size(); i++) {
-                swiat.getListaRynkowWalutowoSurowcowych().get(i).getListaParWalut().add(new ParaWalut(random, swiat.getListaRynkowWalutowoSurowcowych().get(i).getWaluta(), waluta));
+                ParaWalut paraWalut  = new ParaWalut(random, swiat.getListaRynkowWalutowoSurowcowych().get(i).getWaluta(), waluta);
+                swiat.getListaRynkowWalutowoSurowcowych().get(i).getListaParWalut().add(paraWalut);
+                swiat.getListaParWalut().add(paraWalut);
+                listaMain.add(paraWalut);
+                lista.add(paraWalut);
             }
             RynekWalutowoSurowcowy rynekWalutowoSurowcowy = new RynekWalutowoSurowcowy(random, waluta);
             waluta.setRynekWalutowoSurowcowy(rynekWalutowoSurowcowy);
             for (int i = 0; i < swiat.getListaWalut().size(); i++) {
-                rynekWalutowoSurowcowy.getListaParWalut().add(new ParaWalut(random, waluta, swiat.getListaWalut().get(i)));
+                ParaWalut paraWalut = new ParaWalut(random, waluta, swiat.getListaWalut().get(i));
+                rynekWalutowoSurowcowy.getListaParWalut().add(paraWalut);
+                swiat.getListaParWalut().add(paraWalut);
+                listaMain.add(paraWalut);
+                lista.add(paraWalut);
             }
             swiat.getListaRynkowWalutowoSurowcowych().add(rynekWalutowoSurowcowy);
             swiat.getListaWalut().add(waluta);

@@ -14,6 +14,16 @@ import java.io.Serializable;
 public class PodmiotInwestujacy implements Serializable{
     private String imie;
     private String nazwisko;
+    private Thread thread;
+
+    /**
+     * Gets thread
+     *
+     * @return thread
+     */
+    public Thread getThread() {
+        return thread;
+    }
 
     /**
      * Gets imie

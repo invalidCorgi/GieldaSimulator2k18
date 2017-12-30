@@ -3,6 +3,7 @@ package GieldaSimulator2k18;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
 import java.time.format.DateTimeFormatter;
@@ -10,13 +11,32 @@ import java.time.format.DateTimeFormatter;
 public class ObjectInformationPreviewController {
     @FXML
     private ListView<String> InformationListView;
+    @FXML
+    private Button DeleteButton;
 
     private Object object;
     private ObservableList<String> list;
+    private Swiat swiat;
 
     @FXML
     private void DeleteObject(){
-
+        if (PodmiotInwestujacy.class.isInstance(object)){
+            PodmiotInwestujacy podmiotInwestujacy = (PodmiotInwestujacy) object;
+            podmiotInwestujacy.getThread().interrupt();
+            if (FunduszInwestycyjny.class.isInstance(object)){
+                FunduszInwestycyjny funduszInwestycyjny = (FunduszInwestycyjny) object;
+                swiat.getListaFunduszyInwestycyjnych().remove(funduszInwestycyjny);
+            }
+            if (Inwestor.class.isInstance(object)){
+                Inwestor inwestor = (Inwestor) object;
+                swiat.getListaInwestorow().remove(inwestor);
+            }
+        }
+        if (Spolka.class.isInstance(object)){
+            Spolka spolka = (Spolka) object;
+            swiat.getListaSpolek().remove(spolka);
+            Spolka.getNazwy().add(spolka.getNazwa());
+        }
     }
 
     public void initData(Object object){
@@ -76,6 +96,7 @@ public class ObjectInformationPreviewController {
     }
 
     private void initSpolka(Spolka spolka){
+        DeleteButton.setDisable(false);
         list.add("Liczba akcji: "+spolka.getLiczbaAkcji());
         list.add("Zysk: "+spolka.getZysk());
         list.add("Przychód: "+spolka.getPrzychod());
@@ -95,32 +116,75 @@ public class ObjectInformationPreviewController {
     }
 
     private void initParaWalut(ParaWalut paraWalut){
+        list.add("Główna waluta: " + paraWalut.getGlownaWaluta());
+        list.add("Druga waluta: " + paraWalut.getDrugaWaluta());
     }
 
     private void initWaluta(Waluta waluta){
+        list.add("Nazwa: " + waluta.getNazwa());
+        list.add("Lista krajów płatniczych:");
+        for (int i=0; i<waluta.getKrajePlatnicze().size();i++){
+            list.add(waluta.getKrajePlatnicze().get(i));
+        }
     }
 
     private void initPodmiotInwestujacy(PodmiotInwestujacy podmiotInwestujacy){
+        DeleteButton.setDisable(false);
+        list.add("Imie: " + podmiotInwestujacy.getImie());
+        list.add("Nazwisko: " + podmiotInwestujacy.getNazwisko());
     }
 
     private void initFunduszInwestycyjny(FunduszInwestycyjny funduszInwestycyjny){
+        list.add("Nazwa: " + funduszInwestycyjny.getNazwa());
     }
 
     private void initInwestor(Inwestor inwestor){
+        list.add("PESEL: " + inwestor.getPesel());
+        list.add("Budżet: " + inwestor.getBudzet());
     }
 
     private void initRynek(Rynek rynek){
+        list.add("Nazwa: " + rynek.getNazwa());
+        list.add("Waluta: " + rynek.getWaluta());
+        list.add("Marża procentowa: " + rynek.getMarzaProcentowa() + "%");
     }
 
     private void initGieldaPapierowWartosciowych(GieldaPapierowWartosciowych gieldaPapierowWartosciowych){
+        list.add("Kraj: " + gieldaPapierowWartosciowych.getKraj());
+        list.add("Miasto: " + gieldaPapierowWartosciowych.getMiasto());
+        list.add("Adres siedziby: " + gieldaPapierowWartosciowych.getAdresSiedziby());
+        list.add("Lista spółek:");
+        for (int i=0; i<gieldaPapierowWartosciowych.getListaSpolek().size();i++){
+            list.add(gieldaPapierowWartosciowych.getListaSpolek().get(i).toString());
+        }
+        list.add("Lista indeksów:");
+        for (int i=0; i<gieldaPapierowWartosciowych.getListaIndeksow().size();i++){
+            list.add(gieldaPapierowWartosciowych.getListaIndeksow().get(i).toString());
+        }
     }
 
     private void initRynekWalutowoSurowcowy(RynekWalutowoSurowcowy rynekWalutowoSurowcowy){
+        list.add("Lista par walut:");
+        for (int i=0; i<rynekWalutowoSurowcowy.getListaParWalut().size();i++){
+            list.add(rynekWalutowoSurowcowy.getListaParWalut().get(i).toString());
+        }
+        list.add("Lista surowców:");
+        for (int i=0; i<rynekWalutowoSurowcowy.getListaSurowcow().size();i++){
+            list.add(rynekWalutowoSurowcowy.getListaSurowcow().get(i).toString());
+        }
     }
 
     private void initIndeks(Indeks indeks){
+        list.add("Nazwa: " + indeks.getNazwa());
+        list.add("Giełda: " + indeks.getGielda());
+        list.add("Łączna wartość: " + indeks.getLacznaWartosc());
+        list.add("Lista spółek:");
+        for (int i=0;i<indeks.getListaSpolek().size();i++){
+            list.add(indeks.getListaSpolek().get(i).toString());
+        }
     }
 
     private void initIndeksNajwiekszychSpolek(IndeksNajwiekszychSpolek indeksNajwiekszychSpolek){
+        list.add("Ilość spółek: " + indeksNajwiekszychSpolek.getIloscSpolek());
     }
 }

@@ -43,11 +43,13 @@ public class AktywaInformationPreviewController {
         list.add("Kurs maksymalny: "+aktywa.getKursMaksymalny());
         list.add("Wolumen: "+aktywa.getWolumen());
         list.add("Obroty: "+aktywa.getObroty());
+
         if (Surowiec.class.isInstance(aktywa)){
             Surowiec surowiec = (Surowiec) aktywa;
             list.add("Jednostka handlowa: "+surowiec.getJednostkaHandlowa());
             list.add("Waluta notowania: "+surowiec.getWalutaNotowania());
         }
+
         if (Spolka.class.isInstance(aktywa)){
             Spolka spolka = (Spolka) aktywa;
             list.add("Liczba akcji: "+spolka.getLiczbaAkcji());
@@ -61,6 +63,12 @@ public class AktywaInformationPreviewController {
                     list.add(spolka.getListaIndeksow().get(i).toString());
                 }
             }
+        }
+
+        if (ParaWalut.class.isInstance(aktywa)){
+            ParaWalut paraWalut = (ParaWalut) aktywa;
+            list.add("Główna waluta: " + paraWalut.getGlownaWaluta());
+            list.add("Druga waluta: " + paraWalut.getDrugaWaluta());
         }
 
         //NumberAxis yAxis = new NumberAxis();
