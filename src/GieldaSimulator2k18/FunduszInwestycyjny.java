@@ -6,6 +6,10 @@
 package GieldaSimulator2k18;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -13,6 +17,18 @@ import java.io.Serializable;
  */
 public class FunduszInwestycyjny extends PodmiotInwestujacy implements Runnable, Serializable{
     private String nazwa;
+    private static List<String> nazwy = new ArrayList<>(
+            Arrays.asList("Kaszlajda&Obiekty", "Bank Vivaldiego", "Jam jest FUNDUSZ")
+    );
+
+    public FunduszInwestycyjny(Random random) throws Exception {
+        super(random);
+        if (nazwy.size()>0) {
+            nazwa = nazwy.get(random.nextInt(nazwy.size()));
+            nazwy.remove(getNazwa());
+        }
+        else throw new Exception();
+    }
 
     /**
      * Gets nazwa

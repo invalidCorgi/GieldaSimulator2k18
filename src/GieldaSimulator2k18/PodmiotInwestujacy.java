@@ -6,6 +6,10 @@
 package GieldaSimulator2k18;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -15,6 +19,25 @@ public class PodmiotInwestujacy implements Serializable{
     private String imie;
     private String nazwisko;
     private Thread thread;
+    private static List<String> imiona = new ArrayList<>(
+            Arrays.asList("Obi Wan", "Darek", "Wilczek")
+    );
+    private static List<String> nazwiska = new ArrayList<>(
+            Arrays.asList("Kenobi", "Łolstrit", "Domyśl-Się")
+    );
+
+    public PodmiotInwestujacy(Random random) throws Exception {
+        if (imiona.size()>0) {
+            imie = imiona.get(random.nextInt(imiona.size()));
+            imiona.remove(getImie());
+        }
+        else throw new Exception();
+        if (nazwiska.size()>0) {
+            nazwisko = nazwiska.get(random.nextInt(nazwiska.size()));
+            nazwiska.remove(getImie());
+        }
+        else throw new Exception();
+    }
 
     /**
      * Gets thread

@@ -6,6 +6,7 @@
 package GieldaSimulator2k18;
 
 import java.io.Serializable;
+import java.util.Random;
 
 /**
  *
@@ -14,6 +15,16 @@ import java.io.Serializable;
 public class Inwestor extends PodmiotInwestujacy implements Runnable, Serializable{
     private String pesel;
     private double budzet;
+    private static int peselLength = 11;
+
+    public Inwestor(Random random) throws Exception {
+        super(random);
+        pesel="";
+        for (int i=0;i<peselLength;i++){
+            pesel += random.nextInt(10);
+        }
+        budzet = random.nextDouble()*100;
+    }
 
     /**
      * Gets pesel
