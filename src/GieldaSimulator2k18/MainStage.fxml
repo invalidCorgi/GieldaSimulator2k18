@@ -5,7 +5,10 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GieldaSimulator2k18.MainStageController">
@@ -17,25 +20,49 @@
       </StackPane>
    </center>
    <top>
-      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+      <GridPane prefWidth="600.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Button fx:id="OpenControlPanelButton" mnemonicParsing="false" onAction="#OpenControlPanel" text="Otwórz panel kontrolny">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#SerializeSwiat" text="Zapisz stan giełdy">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="DeserializeButton" mnemonicParsing="false" onAction="#DeserializeSwiat" text="Odtwórz stan giełdy">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
-            </Button>
-            <TextField fx:id="SerializationFilename" promptText="nazwa pliku z giełdą" text="gielda.ser" />
+            <HBox alignment="CENTER">
+               <children>
+                  <Button fx:id="OpenControlPanelButton" mnemonicParsing="false" onAction="#OpenControlPanel" text="Panel kontrolny">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#OpenMultiLineChart" text="Wykresy wielu aktywów">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" GridPane.rowIndex="1">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#SerializeSwiat" text="Zapisz stan giełdy">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="DeserializeButton" mnemonicParsing="false" onAction="#DeserializeSwiat" text="Odtwórz stan giełdy">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <TextField fx:id="SerializationFilename" promptText="nazwa pliku z giełdą" text="gielda.ser">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
          </children>
-      </HBox>
+      </GridPane>
    </top>
 </BorderPane>

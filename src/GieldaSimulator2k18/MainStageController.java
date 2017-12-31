@@ -119,6 +119,21 @@ public class MainStageController {
         }
     }
 
+    @FXML
+    private void OpenMultiLineChart() throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MultiLineChart.fxml"));
+        stage.setTitle("Wykres wielu aktywów");
+        stage.setMinWidth(640);
+        stage.setMinHeight(480);
+        stage.setScene(new Scene(loader.load()));
+
+        MultiLineChartController controller = loader.getController();
+        controller.initData(list);
+
+        stage.show();
+    }
+
     public void initData(){
         list = FXCollections.observableArrayList();
         MainListView.setItems(list);
