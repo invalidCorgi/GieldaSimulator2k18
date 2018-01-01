@@ -104,6 +104,16 @@ public class MainStageController {
             for (int i = 0; i < swiat.getListaGield().size(); i++) {
                 GieldaPapierowWartosciowych.getNazwy().remove(swiat.getListaGield().get(i).getNazwa());
             }
+            for (int i=0; i<swiat.getListaInwestorow().size(); i++){
+                Thread thread = new Thread(swiat.getListaInwestorow().get(i));
+                swiat.getListaInwestorow().get(i).setThread(thread);
+                thread.start();
+            }
+            for (int i=0; i<swiat.getListaFunduszyInwestycyjnych().size(); i++){
+                Thread thread = new Thread(swiat.getListaFunduszyInwestycyjnych().get(i));
+                swiat.getListaFunduszyInwestycyjnych().get(i).setThread(thread);
+                thread.start();
+            }
         }
         catch (IOException ex){
             Alert alert = new Alert(Alert.AlertType.INFORMATION,"Wystąpił problem przy otwieraniu pliku");

@@ -56,6 +56,15 @@ public class PodmiotInwestujacy implements Serializable{
     }
 
     /**
+     * Sets thread
+     *
+     * @param thread thread to set
+     */
+    public void setThread(Thread thread) {
+        this.thread = thread;
+    }
+
+    /**
      * Gets imie
      *
      * @return imie
