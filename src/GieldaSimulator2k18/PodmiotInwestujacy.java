@@ -20,23 +20,30 @@ public class PodmiotInwestujacy implements Serializable{
     private String nazwisko;
     private Thread thread;
     private static List<String> imiona = new ArrayList<>(
-            Arrays.asList("Obi Wan", "Darek", "Wilczek")
+            Arrays.asList("Obi Wan", "Darek", "Wilczek", "Jan", "Marcin", "Kamil", "Tadeusz", "Mistrz", "Yukki", "Natsume", "Hiruka", "Ookami")
     );
     private static List<String> nazwiska = new ArrayList<>(
-            Arrays.asList("Kenobi", "Łolstrit", "Domyśl-Się")
+            Arrays.asList("Kenobi", "Łolstrit", "Domyśl-Się", "Gruszka", "Koszlajda", "Morzy", "Yoda", "Kłoda", "Broda")
     );
+    private static List<String> wykorzystywaneImionaNazwiska = new ArrayList<>();
 
     public PodmiotInwestujacy(Random random) throws Exception {
-        if (imiona.size()>0) {
+        if (wykorzystywaneImionaNazwiska.size() == imiona.size()*nazwiska.size())
+            throw new Exception();
+        do {
             imie = imiona.get(random.nextInt(imiona.size()));
-            imiona.remove(getImie());
-        }
-        else throw new Exception();
-        if (nazwiska.size()>0) {
-            nazwisko = nazwiska.get(random.nextInt(nazwiska.size()));
-            nazwiska.remove(getImie());
-        }
-        else throw new Exception();
+            nazwisko = nazwiska.get(random.nextInt(imiona.size()));
+        }while (wykorzystywaneImionaNazwiska.contains(imie + " " + nazwisko));
+        wykorzystywaneImionaNazwiska.add(imie + " " + nazwisko);
+    }
+
+    /**
+     * Gets wykorzystywaneImionaNazwiska
+     *
+     * @return wykorzystywaneImionaNazwiska
+     */
+    public static List<String> getWykorzystywaneImionaNazwiska() {
+        return wykorzystywaneImionaNazwiska;
     }
 
     /**

@@ -19,7 +19,7 @@ public class Waluta implements Serializable{
     private String nazwa;
     private ArrayList<String> krajePlatnicze;
     private static List<String> nazwy = new ArrayList<>(
-            Arrays.asList("złoty", "dolar", "euro", "yen")
+            Arrays.asList("złoty", "dolar", "euro", "yen", "batat", "bitcoin", "ethereum", "monero")
     );
     private RynekWalutowoSurowcowy rynekWalutowoSurowcowy;
 

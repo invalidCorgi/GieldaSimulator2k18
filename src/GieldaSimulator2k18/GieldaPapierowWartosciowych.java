@@ -22,10 +22,10 @@ public class GieldaPapierowWartosciowych extends Rynek implements Serializable{
     private ArrayList<Spolka> listaSpolek = new ArrayList<>();
     private ArrayList<Indeks> listaIndeksow = new ArrayList<>();
     private static List<String> nazwy = new ArrayList<>(
-            Arrays.asList("Łol Strit")
+            Arrays.asList("Łol Strit", "Best giełda ever", "Papieladnia dla papierów", "Giełda i edukacja łupi domy arabów (like a WINE)")
     );
 
-    public GieldaPapierowWartosciowych(Random random, Waluta waluta) {
+    public GieldaPapierowWartosciowych(Random random, Waluta waluta) throws Exception {
         super(random, waluta,nazwy);
     }
 

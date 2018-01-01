@@ -19,10 +19,10 @@ public class Surowiec extends Aktywa implements Serializable{
     private String jednostkaHandlowa;
     private Waluta walutaNotowania;
     private static List<String> nazwy = new ArrayList<>(
-            Arrays.asList("ropa naftowa", "gaz", "złoto", "srebro")
+            Arrays.asList("ropa naftowa", "gaz", "złoto", "srebro", "ziemniak", "biohazard")
     );
     private static List<String> jednostkiHandlowe = new ArrayList<>(
-            Arrays.asList("baryłki", "uncje")
+            Arrays.asList("baryłka", "uncja", "kilogram")
     );
 
     public Surowiec(Random random, List<Waluta> waluty) throws Exception {

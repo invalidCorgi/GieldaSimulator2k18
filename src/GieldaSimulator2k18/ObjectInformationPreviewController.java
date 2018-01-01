@@ -22,7 +22,7 @@ public class ObjectInformationPreviewController {
     private void DeleteObject(){
         if (PodmiotInwestujacy.class.isInstance(object)){
             PodmiotInwestujacy podmiotInwestujacy = (PodmiotInwestujacy) object;
-            podmiotInwestujacy.getThread().interrupt();
+            PodmiotInwestujacy.getWykorzystywaneImionaNazwiska().remove(podmiotInwestujacy.getImie() + " " + podmiotInwestujacy.getNazwisko());
             if (FunduszInwestycyjny.class.isInstance(object)){
                 FunduszInwestycyjny funduszInwestycyjny = (FunduszInwestycyjny) object;
                 swiat.getListaFunduszyInwestycyjnych().remove(funduszInwestycyjny);
@@ -31,6 +31,7 @@ public class ObjectInformationPreviewController {
                 Inwestor inwestor = (Inwestor) object;
                 swiat.getListaInwestorow().remove(inwestor);
             }
+            podmiotInwestujacy.getThread().interrupt();
         }
         if (Spolka.class.isInstance(object)){
             Spolka spolka = (Spolka) object;
@@ -123,9 +124,7 @@ public class ObjectInformationPreviewController {
     private void initWaluta(Waluta waluta){
         list.add("Nazwa: " + waluta.getNazwa());
         list.add("Lista krajów płatniczych:");
-        for (int i=0; i<waluta.getKrajePlatnicze().size();i++){
-            list.add(waluta.getKrajePlatnicze().get(i));
-        }
+        list.addAll(waluta.getKrajePlatnicze());
     }
 
     private void initPodmiotInwestujacy(PodmiotInwestujacy podmiotInwestujacy){

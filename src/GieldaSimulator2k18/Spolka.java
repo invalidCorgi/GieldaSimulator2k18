@@ -23,7 +23,7 @@ public class Spolka extends Aktywa implements Serializable{
     private double kapitalZakladowy;
     private List<Indeks> listaIndeksow;
     private static List<String> nazwy = new ArrayList<>(
-            Arrays.asList("MikroShit", "Ajpul", "BiegaGames", "InvalidCorgiGames")
+            Arrays.asList("MikroShit", "Ajpul", "BiegaGames", "InvalidCorgiGames", "Ikeła", "Łerla Merlę", "Lydl", "Stonka", "Brutto")
     );
 
     /**

@@ -28,13 +28,13 @@ public class Rynek implements Serializable{
         this.nazwa = nazwa;
     }
 
-    public Rynek(Random random, Waluta waluta, List<String> nazwy) {
+    public Rynek(Random random, Waluta waluta, List<String> nazwy) throws Exception {
         this(random,waluta);
         if (nazwy.size()>0) {
             nazwa = nazwy.get(random.nextInt(nazwy.size()));
             nazwy.remove(getNazwa());
         }
-        else nazwa = "wszystkie zajęte";
+        else throw new Exception();
     }
 
     @Override

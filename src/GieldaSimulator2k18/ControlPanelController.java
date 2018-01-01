@@ -26,35 +26,15 @@ public class ControlPanelController {
         this.random = random;
         this.listaMain = listaMain;
         lista = FXCollections.observableArrayList();
-        for (int i=0;i<swiat.getListaGield().size();i++){
-            lista.add(swiat.getListaGield().get(i));
-        }
-        for (int i=0;i<swiat.getListaRynkowWalutowoSurowcowych().size();i++){
-            lista.add(swiat.getListaRynkowWalutowoSurowcowych().get(i));
-        }
-        for (int i=0;i<swiat.getListaWalut().size();i++){
-            lista.add(swiat.getListaWalut().get(i));
-        }
-        for (int i=0;i<swiat.getListaSpolek().size();i++){
-            lista.add(swiat.getListaSpolek().get(i));
-        }
-        for (int i=0;i<swiat.getListaSurowcow().size();i++){
-            lista.add(swiat.getListaSurowcow().get(i));
-        }
-        for (int i=0;i<swiat.getListaParWalut().size();i++){
-            lista.add(swiat.getListaParWalut().get(i));
-        }
-        for (int i=0;i<swiat.getListaIndeksow().size();i++){
-            lista.add(swiat.getListaIndeksow().get(i));
-        }
-        for (int i=0;i<swiat.getListaInwestorow().size();i++){
-            lista.add(swiat.getListaInwestorow().get(i));
-        }
-        for (int i=0;i<swiat.getListaFunduszyInwestycyjnych().size();i++){
-            lista.add(swiat.getListaFunduszyInwestycyjnych().get(i));
-        }
-
-
+        lista.addAll(swiat.getListaGield());
+        lista.addAll(swiat.getListaRynkowWalutowoSurowcowych());
+        lista.addAll(swiat.getListaWalut());
+        lista.addAll(swiat.getListaSpolek());
+        lista.addAll(swiat.getListaSurowcow());
+        lista.addAll(swiat.getListaParWalut());
+        lista.addAll(swiat.getListaIndeksow());
+        lista.addAll(swiat.getListaInwestorow());
+        lista.addAll(swiat.getListaFunduszyInwestycyjnych());
 
         MainListView.setItems(lista);
     }
@@ -66,9 +46,15 @@ public class ControlPanelController {
             alert.show();
         }
         else {
-            GieldaPapierowWartosciowych gielda = new GieldaPapierowWartosciowych(random,swiat.getListaWalut().get(random.nextInt(swiat.getListaWalut().size())));
-            swiat.getListaGield().add(gielda);
-            lista.add(gielda);
+            try {
+                GieldaPapierowWartosciowych gielda = new GieldaPapierowWartosciowych(random, swiat.getListaWalut().get(random.nextInt(swiat.getListaWalut().size())));
+                swiat.getListaGield().add(gielda);
+                lista.add(gielda);
+            }
+            catch (Exception ex){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,"Nie możesz utworzyć więcej giełd");
+                alert.show();
+            }
         }
     }
 
