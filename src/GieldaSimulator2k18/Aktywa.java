@@ -85,15 +85,6 @@ public abstract class Aktywa implements Serializable{
     }
 
     /**
-     * Sets dataPierwszejWyceny
-     *
-     * @param dataPierwszejWyceny dataPierwszejWyceny to set
-     */
-    public void setDataPierwszejWyceny(LocalDateTime dataPierwszejWyceny) {
-        this.dataPierwszejWyceny = dataPierwszejWyceny;
-    }
-
-    /**
      * Gets kursOtwarcia
      *
      * @return kursOtwarcia
@@ -103,20 +94,11 @@ public abstract class Aktywa implements Serializable{
     }
 
     /**
-     * Sets kursOtwarcia
-     *
-     * @param kursOtwarcia kursOtwarcia to set
-     */
-    public void setKursOtwarcia(Double kursOtwarcia) {
-        this.kursOtwarcia = kursOtwarcia;
-    }
-
-    /**
      * Gets kursMinimalny
      *
      * @return kursMinimalny
      */
-    public Double getKursMinimalny() {
+    public synchronized Double getKursMinimalny() {
         return kursMinimalny;
     }
 
@@ -125,7 +107,7 @@ public abstract class Aktywa implements Serializable{
      *
      * @param kursMinimalny kursMinimalny to set
      */
-    public void setKursMinimalny(Double kursMinimalny) {
+    public synchronized void setKursMinimalny(Double kursMinimalny) {
         this.kursMinimalny = kursMinimalny;
     }
 
@@ -134,7 +116,7 @@ public abstract class Aktywa implements Serializable{
      *
      * @return kursMaksymalny
      */
-    public Double getKursMaksymalny() {
+    public synchronized Double getKursMaksymalny() {
         return kursMaksymalny;
     }
 
@@ -143,7 +125,7 @@ public abstract class Aktywa implements Serializable{
      *
      * @param kursMaksymalny kursMaksymalny to set
      */
-    public void setKursMaksymalny(Double kursMaksymalny) {
+    public synchronized void setKursMaksymalny(Double kursMaksymalny) {
         this.kursMaksymalny = kursMaksymalny;
     }
 
@@ -152,7 +134,7 @@ public abstract class Aktywa implements Serializable{
      *
      * @return kursAktualny
      */
-    public Double getKursAktualny() {
+    public synchronized Double getKursAktualny() {
         return kursAktualny;
     }
 
@@ -161,7 +143,7 @@ public abstract class Aktywa implements Serializable{
      *
      * @param kursAktualny kursAktualny to set
      */
-    public void setKursAktualny(Double kursAktualny) {
+    public synchronized void setKursAktualny(Double kursAktualny) {
         this.kursAktualny = kursAktualny;
     }
 
@@ -170,7 +152,7 @@ public abstract class Aktywa implements Serializable{
      *
      * @return wolumen
      */
-    public Double getWolumen() {
+    public synchronized Double getWolumen() {
         return wolumen;
     }
 
@@ -179,7 +161,7 @@ public abstract class Aktywa implements Serializable{
      *
      * @param wolumen wolumen to set
      */
-    public void setWolumen(Double wolumen) {
+    public synchronized void setWolumen(Double wolumen) {
         this.wolumen = wolumen;
     }
 
@@ -188,7 +170,7 @@ public abstract class Aktywa implements Serializable{
      *
      * @return obroty
      */
-    public Double getObroty() {
+    public synchronized Double getObroty() {
         return obroty;
     }
 
@@ -197,7 +179,7 @@ public abstract class Aktywa implements Serializable{
      *
      * @param obroty obroty to set
      */
-    public void setObroty(Double obroty) {
+    public synchronized void setObroty(Double obroty) {
         this.obroty = obroty;
     }
 
@@ -206,17 +188,8 @@ public abstract class Aktywa implements Serializable{
      *
      * @return historiaKursu
      */
-    public List<WpisHistorii> getHistoriaKursu() {
+    public synchronized List<WpisHistorii> getHistoriaKursu() {
         return historiaKursu;
-    }
-
-    /**
-     * Sets historiaKursu
-     *
-     * @param historiaKursu historiaKursu to set
-     */
-    public void setHistoriaKursu(List<WpisHistorii> historiaKursu) {
-        this.historiaKursu = historiaKursu;
     }
 
     /**
@@ -224,7 +197,7 @@ public abstract class Aktywa implements Serializable{
      *
      * @return liczbaKupujacych
      */
-    public int getLiczbaKupujacych() {
+    public synchronized int getLiczbaKupujacych() {
         return liczbaKupujacych;
     }
 
@@ -233,7 +206,7 @@ public abstract class Aktywa implements Serializable{
      *
      * @param liczbaKupujacych liczbaKupujacych to set
      */
-    public void setLiczbaKupujacych(int liczbaKupujacych) {
+    public synchronized void setLiczbaKupujacych(int liczbaKupujacych) {
         this.liczbaKupujacych = liczbaKupujacych;
     }
 
@@ -242,7 +215,7 @@ public abstract class Aktywa implements Serializable{
      *
      * @return liczbaSprzedajacych
      */
-    public int getLiczbaSprzedajacych() {
+    public synchronized int getLiczbaSprzedajacych() {
         return liczbaSprzedajacych;
     }
 
@@ -251,7 +224,7 @@ public abstract class Aktywa implements Serializable{
      *
      * @param liczbaSprzedajacych liczbaSprzedajacych to set
      */
-    public void setLiczbaSprzedajacych(int liczbaSprzedajacych) {
+    public synchronized void setLiczbaSprzedajacych(int liczbaSprzedajacych) {
         this.liczbaSprzedajacych = liczbaSprzedajacych;
     }
 
