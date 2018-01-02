@@ -27,7 +27,7 @@ public class MultiLineChartController {
             XYChart.Series series = new XYChart.Series();
             series.setName(aktywa.getNazwa());
             for (int i = 0; i < aktywa.getHistoriaKursu().size(); i++) {
-                series.getData().add(new XYChart.Data(aktywa.getHistoriaKursu().get(i).getCzas().format(DateTimeFormatter.ofPattern("dd-MM-yyyy\nHH:mm:ss")), aktywa.getHistoriaKursu().get(i).getKurs()/aktywa.getKursMaksymalny()*100));//aktywa.getHistoriaKursu().get(i).getCzas().toEpochSecond(ZoneOffset.UTC)));
+                series.getData().add(new XYChart.Data(aktywa.getHistoriaKursu().get(i).getCzas().format(DateTimeFormatter.ofPattern("dd-MM-yyyy\nHH:mm:ss")), aktywa.getHistoriaKursu().get(i).getKurs()/aktywa.getKursOtwarcia()*100));
             }
             AktywaLineChart.getData().add(series);
         }
