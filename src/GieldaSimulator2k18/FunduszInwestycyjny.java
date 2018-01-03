@@ -15,7 +15,7 @@ import java.util.Random;
  *
  * @author wojtekreg
  */
-public class FunduszInwestycyjny extends PodmiotInwestujacy implements Runnable, Serializable{
+public class FunduszInwestycyjny extends PodmiotInwestujacy implements Serializable{
     private String nazwa;
     private static List<String> nazwy = new ArrayList<>(
             Arrays.asList("Kaszlajda&Obiekty", "Bank Vivaldiego", "Jam jest FUNDUSZ")

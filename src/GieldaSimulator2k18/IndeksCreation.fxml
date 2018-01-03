@@ -9,31 +9,30 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GieldaSimulator2k18.IndeksCreationController">
    <top>
-      <ListView prefHeight="100.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+      <ListView fx:id="gieldyListView" onMouseClicked="#wybierzGielde" prefHeight="150.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <ListView prefHeight="200.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+      <ListView fx:id="spolkiListView" onMouseClicked="#wybierzSpolke" prefHeight="200.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
       <VBox prefHeight="150.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <ListView prefHeight="200.0" prefWidth="600.0" />
+            <ListView fx:id="wybraneSpolkiListView" onMouseClicked="#odznaczSpolke" prefHeight="200.0" prefWidth="600.0" />
             <HBox alignment="CENTER" prefWidth="200.0">
                <children>
-                  <TextField prefWidth="200.0" promptText="Ile największych spółek?" text="2">
+                  <TextField fx:id="najwiekszeSpolkiTextField" prefWidth="200.0" promptText="Ile największych spółek?" text="2">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </TextField>
-                  <CheckBox mnemonicParsing="false" text="Indeks największych spółek?">
+                  <CheckBox fx:id="najwiekszeSpolkiCheckBox" mnemonicParsing="false" onAction="#najwiekszeSpolkiCheckBoxClicked" text="Indeks największych spółek?">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </CheckBox>
-                  <Button mnemonicParsing="false" text="Zatwierdź">
+                  <Button mnemonicParsing="false" onAction="#stworzIndeks" text="Zatwierdź">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>

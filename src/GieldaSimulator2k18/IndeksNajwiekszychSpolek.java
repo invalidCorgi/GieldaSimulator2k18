@@ -6,6 +6,7 @@
 package GieldaSimulator2k18;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,6 +14,32 @@ import java.io.Serializable;
  */
 public class IndeksNajwiekszychSpolek extends Indeks implements Serializable{
     private int iloscSpolek;
+
+    public IndeksNajwiekszychSpolek(GieldaPapierowWartosciowych gielda, int iloscSpolek){
+        super(gielda,"Top "+iloscSpolek+" "+gielda);
+        this.iloscSpolek = iloscSpolek;
+        updateListaSpolek();
+        updateLacznaWartosc();
+    }
+
+    private void updateListaSpolek(){
+        getListaSpolek().clear();
+        ArrayList<Spolka> spolki = new ArrayList<>();
+        spolki.addAll(getGielda().getListaSpolek());
+        for (int i=0; i<iloscSpolek; i++){
+            double max = 0;
+            Spolka tempSpolka = null;
+            for (int j=0; j<spolki.size(); j++){
+                if (spolki.get(j).getKursAktualny()>max){
+                    max = spolki.get(j).getKursAktualny();
+                    tempSpolka = spolki.get(j);
+                }
+            }
+            getListaSpolek().add(tempSpolka);
+            spolki.remove(tempSpolka);
+            tempSpolka.getListaIndeksow().add(this);
+        }
+    }
 
     /**
      * Gets iloscSpolek
@@ -22,17 +49,5 @@ public class IndeksNajwiekszychSpolek extends Indeks implements Serializable{
     public int getIloscSpolek() {
         return iloscSpolek;
     }
-
-    /**
-     * Sets iloscSpolek
-     *
-     * @param iloscSpolek iloscSpolek to set
-     */
-    public void setIloscSpolek(int iloscSpolek) throws NieMaTyleSpolekException {
-        if (iloscSpolek>getGielda().getListaSpolek().size())
-            throw new NieMaTyleSpolekException();
-        this.iloscSpolek = iloscSpolek;
-    }
-
 
 }

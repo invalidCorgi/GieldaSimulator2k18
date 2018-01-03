@@ -5,6 +5,8 @@
  */
 package GieldaSimulator2k18;
 
+import javafx.collections.ObservableList;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -15,8 +17,38 @@ import java.util.ArrayList;
 public class Indeks implements Serializable{
     private String nazwa;
     private ArrayList<Spolka> listaSpolek = new ArrayList<>();
-    double lacznaWartosc;
+    private double lacznaWartosc;
     private GieldaPapierowWartosciowych gielda;
+
+    @Override
+    public String toString() {
+        return nazwa;
+    }
+
+    public Indeks(GieldaPapierowWartosciowych gielda, String nazwa){
+        this.gielda = gielda;
+        this.nazwa = nazwa;
+    }
+
+    public Indeks(ObservableList<Spolka> spolkaObservableList, GieldaPapierowWartosciowych gielda){
+        listaSpolek.addAll(spolkaObservableList);
+        this.gielda = gielda;
+        lacznaWartosc = 0;
+        updateLacznaWartosc();
+        nazwa = "Indeks giełdy " + gielda.getNazwa() + ": ";
+        for (int i=0; i<listaSpolek.size(); i++){
+            nazwa+=listaSpolek.get(i).getNazwa();
+            if (i!=listaSpolek.size()-1)
+                nazwa+=", ";
+            listaSpolek.get(i).getListaIndeksow().add(this);
+        }
+    }
+
+    protected void updateLacznaWartosc(){
+        for (int i=0; i<listaSpolek.size(); i++){
+            lacznaWartosc+=listaSpolek.get(i).getKursAktualny();
+        }
+    }
 
     /**
      * Gets nazwa

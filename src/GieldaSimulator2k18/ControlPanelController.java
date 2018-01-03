@@ -59,8 +59,18 @@ public class ControlPanelController {
     }
 
     @FXML
-    private void dodajIndeks(){
+    private void dodajIndeks() throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("IndeksCreation.fxml"));
+        stage.setTitle("Tworzenie Indeksów");
+        stage.setMinWidth(640);
+        stage.setMinHeight(480);
+        stage.setScene(new Scene(loader.load()));
 
+        IndeksCreationController controller = loader.getController();
+        controller.initData(swiat, lista);
+
+        stage.show();
     }
 
     @FXML
@@ -87,6 +97,13 @@ public class ControlPanelController {
             swiat.getListaWalut().add(waluta);
             lista.add(waluta);
             lista.add(rynekWalutowoSurowcowy);
+
+            try {
+                stworzPodmiotInwestujacy();
+            }
+            catch (Exception ignored){
+
+            }
         }
         catch (Exception ex){
             Alert alert = new Alert(Alert.AlertType.INFORMATION,"Nie możesz utworzyć więcej walut");
@@ -158,6 +175,21 @@ public class ControlPanelController {
 
             stage.show();
         }
+    }
+
+    private void stworzPodmiotInwestujacy() throws Exception {
+        PodmiotInwestujacy podmiotInwestujacy;
+        if (random.nextInt(1)==0){
+            podmiotInwestujacy = new Inwestor(random);
+            swiat.getListaInwestorow().add((Inwestor) podmiotInwestujacy);
+        }
+        else {
+            podmiotInwestujacy = new FunduszInwestycyjny(random);
+            swiat.getListaFunduszyInwestycyjnych().add((FunduszInwestycyjny) podmiotInwestujacy);
+        }
+        Thread thread = new Thread(podmiotInwestujacy);
+        podmiotInwestujacy.setThread(thread);
+        thread.start();
     }
 
 }

@@ -12,7 +12,7 @@ import java.util.Random;
  *
  * @author wojtekreg
  */
-public class Inwestor extends PodmiotInwestujacy implements Runnable, Serializable{
+public class Inwestor extends PodmiotInwestujacy implements Serializable{
     private String pesel;
     private double budzet;
     private static int peselLength = 11;

@@ -15,7 +15,7 @@ import java.util.Random;
  *
  * @author wojtekreg
  */
-public class PodmiotInwestujacy implements Serializable{
+public abstract class PodmiotInwestujacy implements Serializable, Runnable {
     private String imie;
     private String nazwisko;
     private Thread thread;
@@ -36,6 +36,8 @@ public class PodmiotInwestujacy implements Serializable{
         }while (wykorzystywaneImionaNazwiska.contains(imie + " " + nazwisko));
         wykorzystywaneImionaNazwiska.add(imie + " " + nazwisko);
     }
+
+
 
     /**
      * Gets wykorzystywaneImionaNazwiska
@@ -98,5 +100,10 @@ public class PodmiotInwestujacy implements Serializable{
      */
     public void setNazwisko(String nazwisko) {
         this.nazwisko = nazwisko;
+    }
+
+    @Override
+    public void run() {
+
     }
 }
