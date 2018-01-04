@@ -119,11 +119,15 @@ public class ControlPanelController {
         }
         else {
             try {
-                Spolka spolka = new Spolka(random);
-                swiat.getListaGield().get(random.nextInt(swiat.getListaGield().size())).getListaSpolek().add(spolka);
+                GieldaPapierowWartosciowych gielda = swiat.getListaGield().get(random.nextInt(swiat.getListaGield().size()));
+                Spolka spolka = new Spolka(random, gielda);
+                gielda.getListaSpolek().add(spolka);
                 swiat.getListaSpolek().add(spolka);
                 lista.add(spolka);
                 listaMain.add(spolka);
+                Thread thread = new Thread(spolka);
+                spolka.setThread(thread);
+                thread.start();
             }
             catch (Exception ex){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION,"Nie możesz utworzyć więcej spółek");
@@ -171,7 +175,7 @@ public class ControlPanelController {
             stage.setScene(new Scene(loader.load()));
 
             ObjectInformationPreviewController controller = loader.getController();
-            controller.initData(MainListView.getSelectionModel().getSelectedItem());
+            controller.initData(MainListView.getSelectionModel().getSelectedItem(),listaMain,lista,swiat);
 
             stage.show();
         }

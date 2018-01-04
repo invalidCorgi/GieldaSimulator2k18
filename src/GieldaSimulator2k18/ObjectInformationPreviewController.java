@@ -16,6 +16,8 @@ public class ObjectInformationPreviewController {
 
     private Object object;
     private ObservableList<String> list;
+    private ObservableList<Aktywa> mainListViewObservableList;
+    private ObservableList<Object> controlPanelListViewObservableList;
     private Swiat swiat;
 
     @FXML
@@ -35,13 +37,20 @@ public class ObjectInformationPreviewController {
         }
         if (Spolka.class.isInstance(object)){
             Spolka spolka = (Spolka) object;
+            spolka.getThread().interrupt();
             swiat.getListaSpolek().remove(spolka);
+            spolka.getGielda().getListaSpolek().remove(spolka);
             Spolka.getNazwy().add(spolka.getNazwa());
+            mainListViewObservableList.remove(spolka);
+            controlPanelListViewObservableList.remove(spolka);
         }
     }
 
-    public void initData(Object object){
+    public void initData(Object object, ObservableList<Aktywa> aktywaObservableList, ObservableList<Object> objectObservableList, Swiat swiat){
         this.object = object;
+        this.swiat = swiat;
+        mainListViewObservableList = aktywaObservableList;
+        controlPanelListViewObservableList = objectObservableList;
         list = FXCollections.observableArrayList();
         InformationListView.setItems(list);
         if (Aktywa.class.isInstance(object)){
