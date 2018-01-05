@@ -122,12 +122,12 @@ public class ControlPanelController {
                 GieldaPapierowWartosciowych gielda = swiat.getListaGield().get(random.nextInt(swiat.getListaGield().size()));
                 Spolka spolka = new Spolka(random, gielda);
                 gielda.getListaSpolek().add(spolka);
-                swiat.getListaSpolek().add(spolka);
-                lista.add(spolka);
-                listaMain.add(spolka);
                 Thread thread = new Thread(spolka);
                 spolka.setThread(thread);
                 thread.start();
+                swiat.getListaSpolek().add(spolka);
+                lista.add(spolka);
+                listaMain.add(spolka);
             }
             catch (Exception ex){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION,"Nie możesz utworzyć więcej spółek");
@@ -152,6 +152,12 @@ public class ControlPanelController {
                     }
                 }
                 surowiec.getWalutaNotowania().getRynekWalutowoSurowcowy().getListaSurowcow().add(surowiec);
+                try {
+                    stworzPodmiotInwestujacy();
+                }
+                catch (Exception ignored){
+
+                }
                 swiat.getListaSurowcow().add(surowiec);
                 lista.add(surowiec);
                 listaMain.add(surowiec);
@@ -184,13 +190,14 @@ public class ControlPanelController {
     private void stworzPodmiotInwestujacy() throws Exception {
         PodmiotInwestujacy podmiotInwestujacy;
         if (random.nextInt(1)==0){
-            podmiotInwestujacy = new Inwestor(random);
+            podmiotInwestujacy = new Inwestor(random, swiat);
             swiat.getListaInwestorow().add((Inwestor) podmiotInwestujacy);
         }
         else {
-            podmiotInwestujacy = new FunduszInwestycyjny(random);
+            podmiotInwestujacy = new FunduszInwestycyjny(random, swiat);
             swiat.getListaFunduszyInwestycyjnych().add((FunduszInwestycyjny) podmiotInwestujacy);
         }
+        lista.add(podmiotInwestujacy);
         Thread thread = new Thread(podmiotInwestujacy);
         podmiotInwestujacy.setThread(thread);
         thread.start();

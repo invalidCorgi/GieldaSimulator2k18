@@ -8,6 +8,8 @@ package GieldaSimulator2k18;
 import java.io.Serializable;
 import java.util.Random;
 
+import static java.lang.Thread.sleep;
+
 /**
  *
  * @author wojtekreg
@@ -17,8 +19,8 @@ public class Inwestor extends PodmiotInwestujacy implements Serializable{
     private double budzet;
     private static int peselLength = 11;
 
-    public Inwestor(Random random) throws Exception {
-        super(random);
+    public Inwestor(Random random, Swiat swiat) throws Exception {
+        super(random, swiat);
         pesel="";
         for (int i=0;i<peselLength;i++){
             pesel += random.nextInt(10);
@@ -64,6 +66,16 @@ public class Inwestor extends PodmiotInwestujacy implements Serializable{
 
     @Override
     public void run() {
-
+        while (true){
+            if (getThread().isInterrupted()){
+                break;
+            }
+            super.run();
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
     }
 }

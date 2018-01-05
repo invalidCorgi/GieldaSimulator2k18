@@ -26,18 +26,18 @@ public abstract class PodmiotInwestujacy implements Serializable, Runnable {
             Arrays.asList("Kenobi", "Łolstrit", "Domyśl-Się", "Gruszka", "Koszlajda", "Morzy", "Yoda", "Kłoda", "Broda")
     );
     private static List<String> wykorzystywaneImionaNazwiska = new ArrayList<>();
+    private Swiat swiat;
 
-    public PodmiotInwestujacy(Random random) throws Exception {
+    public PodmiotInwestujacy(Random random, Swiat swiat) throws Exception {
         if (wykorzystywaneImionaNazwiska.size() == imiona.size()*nazwiska.size())
             throw new Exception();
         do {
             imie = imiona.get(random.nextInt(imiona.size()));
             nazwisko = nazwiska.get(random.nextInt(imiona.size()));
+            this.swiat = swiat;
         }while (wykorzystywaneImionaNazwiska.contains(imie + " " + nazwisko));
         wykorzystywaneImionaNazwiska.add(imie + " " + nazwisko);
     }
-
-
 
     /**
      * Gets wykorzystywaneImionaNazwiska
@@ -104,6 +104,11 @@ public abstract class PodmiotInwestujacy implements Serializable, Runnable {
 
     @Override
     public void run() {
+        System.out.println("petla2");
+    }
 
+    @Override
+    public String toString() {
+        return imie+" "+nazwisko;
     }
 }

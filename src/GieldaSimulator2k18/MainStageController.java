@@ -144,6 +144,19 @@ public class MainStageController {
         stage.show();
     }
 
+    @FXML
+    private void zamknijSymulacje(){
+        for (int i=0; i<swiat.getListaFunduszyInwestycyjnych().size();i++){
+            swiat.getListaFunduszyInwestycyjnych().get(i).getThread().interrupt();
+        }
+        for (int i=0; i<swiat.getListaInwestorow().size();i++){
+            swiat.getListaInwestorow().get(i).getThread().interrupt();
+        }
+        for (int i=0; i<swiat.getListaSpolek().size(); i++){
+            swiat.getListaSpolek().get(i).getThread().interrupt();
+        }
+    }
+
     public void initData(){
         list = FXCollections.observableArrayList();
         MainListView.setItems(list);

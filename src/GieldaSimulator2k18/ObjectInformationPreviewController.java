@@ -24,6 +24,7 @@ public class ObjectInformationPreviewController {
     private void DeleteObject(){
         if (PodmiotInwestujacy.class.isInstance(object)){
             PodmiotInwestujacy podmiotInwestujacy = (PodmiotInwestujacy) object;
+            podmiotInwestujacy.getThread().interrupt();
             PodmiotInwestujacy.getWykorzystywaneImionaNazwiska().remove(podmiotInwestujacy.getImie() + " " + podmiotInwestujacy.getNazwisko());
             if (FunduszInwestycyjny.class.isInstance(object)){
                 FunduszInwestycyjny funduszInwestycyjny = (FunduszInwestycyjny) object;
@@ -33,7 +34,7 @@ public class ObjectInformationPreviewController {
                 Inwestor inwestor = (Inwestor) object;
                 swiat.getListaInwestorow().remove(inwestor);
             }
-            podmiotInwestujacy.getThread().interrupt();
+            controlPanelListViewObservableList.remove(podmiotInwestujacy);
         }
         if (Spolka.class.isInstance(object)){
             Spolka spolka = (Spolka) object;

@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import static java.lang.Thread.sleep;
+
 /**
  *
  * @author wojtekreg
@@ -21,8 +23,8 @@ public class FunduszInwestycyjny extends PodmiotInwestujacy implements Serializa
             Arrays.asList("Kaszlajda&Obiekty", "Bank Vivaldiego", "Jam jest FUNDUSZ")
     );
 
-    public FunduszInwestycyjny(Random random) throws Exception {
-        super(random);
+    public FunduszInwestycyjny(Random random, Swiat swiat) throws Exception {
+        super(random, swiat);
         if (nazwy.size()>0) {
             nazwa = nazwy.get(random.nextInt(nazwy.size()));
             nazwy.remove(getNazwa());
@@ -50,6 +52,16 @@ public class FunduszInwestycyjny extends PodmiotInwestujacy implements Serializa
 
     @Override
     public void run() {
-
+        while (true) {
+            if (getThread().isInterrupted()) {
+                break;
+            }
+            super.run();
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
     }
 }

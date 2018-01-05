@@ -66,4 +66,8 @@ public class Surowiec extends Aktywa implements Serializable{
     public Waluta getWalutaNotowania() {
         return walutaNotowania;
     }
+
+    public void kup(){
+
+    }
 }
