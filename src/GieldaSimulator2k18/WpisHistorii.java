@@ -16,6 +16,13 @@ public class WpisHistorii implements Serializable{
     private LocalDateTime czas;
     private double kurs;
 
+    /**
+     * Konstruktor
+     *
+     * @param czas czas nowego wpisu
+     * @param kurs kurs podczas wpisu do historii
+     */
+
     public WpisHistorii(LocalDateTime czas, double kurs) {
         this.czas = czas;
         this.kurs = kurs;

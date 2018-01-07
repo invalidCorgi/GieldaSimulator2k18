@@ -28,8 +28,16 @@ public abstract class Aktywa implements Serializable{
     private List<WpisHistorii> historiaKursu;
     private int liczbaKupujacych;
     private int liczbaSprzedajacych;
+    private Rynek rynek;
 
-    public Aktywa(Random random) {
+    /**
+     * Konstruktor losujący wszystkie pola oprócz nazwy
+     *
+     * @param random instancja Random do wylosowania pól
+     * @param rynek Rynek, na którym występuje aktywa
+     */
+
+    public Aktywa(Random random, Rynek rynek) {
         dataPierwszejWyceny = LocalDateTime.now();
         kursOtwarcia = random.nextDouble()*10;
         kursMinimalny = kursOtwarcia;
@@ -41,16 +49,31 @@ public abstract class Aktywa implements Serializable{
         historiaKursu.add(new WpisHistorii(dataPierwszejWyceny,kursOtwarcia));
         liczbaKupujacych = 0;
         liczbaSprzedajacych = 0;
+        this.rynek = rynek;
     }
 
-    public Aktywa(Random random, List<String> nazwy) throws Exception {
-        this(random);
+    /**
+     * Kontruktor losujący wszystkie pola łącznie z nazwą; w razie zajętych wszystkich nazw rzuca wyjątek
+     *
+     * @param random instancja Random do wylosowania pól
+     * @param nazwy lista nazw, z której jedna będzie wylosowana
+     * @param rynek Rynek, na którym występuje aktywa
+     * @throws Exception
+     */
+
+    public Aktywa(Random random, List<String> nazwy, Rynek rynek) throws Exception {
+        this(random, rynek);
         if (nazwy.size()>0) {
             nazwa = nazwy.get(random.nextInt(nazwy.size()));
             nazwy.remove(getNazwa());
         }
         else throw new Exception();
     }
+
+    /**
+     *
+     * @return nazwa
+     */
 
     @Override
     public String toString() {
@@ -193,72 +216,100 @@ public abstract class Aktywa implements Serializable{
     }
 
     /**
-     * Gets liczbaKupujacych
+     * Sets rynek
      *
-     * @return liczbaKupujacych
+     * @param rynek rynek to set
      */
-    public synchronized int getLiczbaKupujacych() {
-        return liczbaKupujacych;
+    protected void setRynek(Rynek rynek) {
+        this.rynek = rynek;
     }
 
     /**
-     * Sets liczbaKupujacych
+     * Kupienie aktywu przez podmiot inwestujący łącznie ze zmianą kursu aktywu i zmianą budżetu inwestora
      *
-     * @param liczbaKupujacych liczbaKupujacych to set
+     * @param podmiotInwestujacy podmiot inwestujący, który chce kupić Aktywa
+     * @return prawda, jeśli możliwe jest kupienie Aktywa, wpp fałsz
      */
-    public synchronized void setLiczbaKupujacych(int liczbaKupujacych) {
-        this.liczbaKupujacych = liczbaKupujacych;
+
+    public synchronized boolean kupAktywa(PodmiotInwestujacy podmiotInwestujacy){
+        if(FunduszInwestycyjny.class.isInstance(podmiotInwestujacy)) {
+            podmiotInwestujacy.getAktywaList().add(this);
+            historiaKursu.add(new WpisHistorii(LocalDateTime.now(), kursAktualny));
+            liczbaKupujacych++;
+            wolumen++;
+            obroty+=kursAktualny;
+            przeliczKurs();
+            return true;
+        }
+        else{
+            Inwestor inwestor = (Inwestor) podmiotInwestujacy;
+            double cena = getKursAktualny() * (1 + rynek.getMarzaProcentowa()/100);
+            if (inwestor.getBudzet()>cena){
+                podmiotInwestujacy.getAktywaList().add(this);
+                inwestor.setBudzet(inwestor.getBudzet()-cena);
+                historiaKursu.add(new WpisHistorii(LocalDateTime.now(), kursAktualny));
+                liczbaKupujacych++;
+                wolumen++;
+                obroty+=kursAktualny;
+                przeliczKurs();
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     }
 
     /**
-     * Gets liczbaSprzedajacych
+     * Sprzedaż aktywu ze zmianą kursu aktywu i budżetu inwestora
      *
-     * @return liczbaSprzedajacych
+     * @param podmiotInwestujacy podmiot inwestujący chcący sprzedać aktywa
      */
-    public synchronized int getLiczbaSprzedajacych() {
-        return liczbaSprzedajacych;
-    }
 
-    /**
-     * Sets liczbaSprzedajacych
-     *
-     * @param liczbaSprzedajacych liczbaSprzedajacych to set
-     */
-    public synchronized void setLiczbaSprzedajacych(int liczbaSprzedajacych) {
-        this.liczbaSprzedajacych = liczbaSprzedajacych;
-    }
-
-    public synchronized boolean kupAktywa(){
-        historiaKursu.add(new WpisHistorii(LocalDateTime.now(),kursAktualny));
-        liczbaKupujacych++;
-        przeliczKurs();
-        return true;
-    }
-
-    public synchronized void sprzedajAktywa(){
+    public synchronized void sprzedajAktywa(PodmiotInwestujacy podmiotInwestujacy){
         historiaKursu.add(new WpisHistorii(LocalDateTime.now(), kursAktualny));
+        if (Inwestor.class.isInstance(podmiotInwestujacy)){
+            Inwestor inwestor= (Inwestor) podmiotInwestujacy;
+            double cena = kursAktualny * (1 - rynek.getMarzaProcentowa()/100);
+            inwestor.setBudzet(inwestor.getBudzet()+cena);
+        }
+        podmiotInwestujacy.getAktywaList().remove(this);
         liczbaSprzedajacych++;
         przeliczKurs();
     }
 
-    private synchronized void przeliczKurs(){
+    /**
+     * Przeliczenie kursu w zależności od liczby kupujących i sprzedających aktywa
+     */
+
+    private void przeliczKurs(){
         if (liczbaKupujacych == liczbaSprzedajacych){
             kursAktualny=kursOtwarcia;
         }
         if (liczbaKupujacych > liczbaSprzedajacych){
             if (liczbaSprzedajacych==0){
-                kursAktualny = kursAktualny*Math.pow(1.1, liczbaKupujacych);
+                kursAktualny = kursOtwarcia*Math.pow(1.1, liczbaKupujacych);
             }
             else {
-                kursAktualny = kursAktualny*liczbaKupujacych/liczbaSprzedajacych;
+                kursAktualny = kursOtwarcia*liczbaKupujacych/liczbaSprzedajacych;
             }
         }
         if (liczbaSprzedajacych > liczbaKupujacych){
             if (liczbaKupujacych == 0){
-                kursAktualny = kursAktualny*Math.pow(0.9, liczbaSprzedajacych);
+                kursAktualny = kursOtwarcia*Math.pow(0.9, liczbaSprzedajacych);
             }
             else {
-                kursAktualny = kursAktualny*liczbaSprzedajacych/liczbaKupujacych;
+                kursAktualny = kursOtwarcia*liczbaSprzedajacych/liczbaKupujacych;
+            }
+        }
+        if (kursAktualny>kursMaksymalny)
+            kursMaksymalny=kursAktualny;
+        if (kursAktualny<kursMinimalny)
+            kursMinimalny=kursAktualny;
+        if (Spolka.class.isInstance(this)){
+            Spolka spolka = (Spolka) this;
+            for (int i=0; i<spolka.getListaIndeksow().size(); i++){
+                spolka.getListaIndeksow().get(i).updateLacznaWartosc();
             }
         }
     }

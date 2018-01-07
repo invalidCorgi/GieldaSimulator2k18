@@ -19,15 +19,24 @@ public class Surowiec extends Aktywa implements Serializable{
     private String jednostkaHandlowa;
     private Waluta walutaNotowania;
     private static List<String> nazwy = new ArrayList<>(
-            Arrays.asList("ropa naftowa", "gaz", "złoto", "srebro", "ziemniak", "biohazard")
+            Arrays.asList("ropa naftowa", "gaz", "złoto", "srebro", "ziemniak", "biohazard", "marchewka", "rzodkiewka", "cubulak", "lager", "porter")
     );
     private static List<String> jednostkiHandlowe = new ArrayList<>(
             Arrays.asList("baryłka", "uncja", "kilogram")
     );
 
+    /**
+     * Konstruktor
+     *
+     * @param random instancja Random
+     * @param waluty lista walut z ktorych bedzie wylosowana waluta notowania
+     * @throws Exception
+     */
+
     public Surowiec(Random random, List<Waluta> waluty) throws Exception {
-        super(random, nazwy);
+        super(random, nazwy, waluty.get(0).getRynekWalutowoSurowcowy());
         walutaNotowania = waluty.get(random.nextInt(waluty.size()));
+        setRynek(walutaNotowania.getRynekWalutowoSurowcowy());
         jednostkaHandlowa = jednostkiHandlowe.get(random.nextInt(jednostkiHandlowe.size()));
     }
 
@@ -67,7 +76,4 @@ public class Surowiec extends Aktywa implements Serializable{
         return walutaNotowania;
     }
 
-    public void kup(){
-
-    }
 }

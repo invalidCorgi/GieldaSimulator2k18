@@ -3,9 +3,12 @@ package GieldaSimulator2k18;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ObjectInformationPreviewController {
@@ -13,12 +16,22 @@ public class ObjectInformationPreviewController {
     private ListView<String> InformationListView;
     @FXML
     private Button DeleteButton;
+    @FXML
+    private Button wykupAkcjeButton;
+    @FXML
+    private TextField liczbaAkcjiTextField;
+    @FXML
+    private TextField cenaWykupuTextField;
 
     private Object object;
     private ObservableList<String> list;
     private ObservableList<Aktywa> mainListViewObservableList;
     private ObservableList<Object> controlPanelListViewObservableList;
     private Swiat swiat;
+
+    /**
+     * Usuniecie inwestora, funduszu inwestycyjnego lub spolki jesli nie ma jej na zadnym indeksie
+     */
 
     @FXML
     private void DeleteObject(){
@@ -38,14 +51,60 @@ public class ObjectInformationPreviewController {
         }
         if (Spolka.class.isInstance(object)){
             Spolka spolka = (Spolka) object;
-            spolka.getThread().interrupt();
-            swiat.getListaSpolek().remove(spolka);
-            spolka.getGielda().getListaSpolek().remove(spolka);
-            Spolka.getNazwy().add(spolka.getNazwa());
-            mainListViewObservableList.remove(spolka);
-            controlPanelListViewObservableList.remove(spolka);
+            if (spolka.getListaIndeksow().size() == 0) {
+                spolka.getThread().interrupt();
+                swiat.getListaSpolek().remove(spolka);
+                spolka.getGielda().getListaSpolek().remove(spolka);
+                Spolka.getNazwy().add(spolka.getNazwa());
+                mainListViewObservableList.remove(spolka);
+                controlPanelListViewObservableList.remove(spolka);
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,"Nie można usunąć spółki należącej do indeksu");
+                alert.show();
+            }
         }
     }
+
+    /**
+     * Reczne wykupienie akcji spolki
+     */
+
+    @FXML
+    private void wykupAkcje(){
+        try {
+            int ilosc = Integer.parseInt(liczbaAkcjiTextField.getText());
+            double cena = Double.parseDouble(cenaWykupuTextField.getText());
+            Spolka spolka = (Spolka) object;
+            int liczbaAkcji = spolka.getLiczbaAkcji() - ilosc;
+            if (liczbaAkcji<0)
+                liczbaAkcji=0;
+            spolka.setLiczbaAkcji(liczbaAkcji);
+            spolka.setKursAktualny(cena);
+            spolka.getHistoriaKursu().add(new WpisHistorii(LocalDateTime.now(),cena));
+            if (cena > spolka.getKursMaksymalny())
+                spolka.setKursMaksymalny(cena);
+            if (cena < spolka.getKursMinimalny())
+                spolka.setKursMinimalny(cena);
+            list.clear();
+            initAktywa(spolka);
+            initSpolka(spolka);
+        }
+        catch (NumberFormatException ex){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Wprowadź liczbę w polu tekstowym");
+            alert.show();
+        }
+    }
+
+    /**
+     *
+     * Inicjalizacja okna informacjami o obiekcie
+     *
+     * @param object obiekt ktorego informacje sa do wyswietlenia
+     * @param aktywaObservableList lista aktywow z okna glownego
+     * @param objectObservableList lista obiektow z panelu kontrolnego
+     * @param swiat swiat do symulacji
+     */
 
     public void initData(Object object, ObservableList<Aktywa> aktywaObservableList, ObservableList<Object> objectObservableList, Swiat swiat){
         this.object = object;
@@ -95,6 +154,11 @@ public class ObjectInformationPreviewController {
         }
     }
 
+    /**
+     *
+     * @param aktywa aktywa do przedstawienia
+     */
+
     private void initAktywa(Aktywa aktywa){
         list.add("Nazwa: "+aktywa.getNazwa());
         list.add("Data pierwszej wyceny: "+aktywa.getDataPierwszejWyceny().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
@@ -106,8 +170,14 @@ public class ObjectInformationPreviewController {
         list.add("Obroty: "+aktywa.getObroty());
     }
 
+    /**
+     *
+     * @param spolka spolka do przedstawienia
+     */
+
     private void initSpolka(Spolka spolka){
         DeleteButton.setDisable(false);
+        wykupAkcjeButton.setDisable(false);
         list.add("Liczba akcji: "+spolka.getLiczbaAkcji());
         list.add("Zysk: "+spolka.getZysk());
         list.add("Przychód: "+spolka.getPrzychod());
@@ -121,15 +191,30 @@ public class ObjectInformationPreviewController {
         }
     }
 
+    /**
+     *
+     * @param surowiec surowiec do przedstawienia
+     */
+
     private void initSurowiec(Surowiec surowiec){
         list.add("Jednostka handlowa: "+surowiec.getJednostkaHandlowa());
         list.add("Waluta notowania: "+surowiec.getWalutaNotowania());
     }
 
+    /**
+     *
+     * @param paraWalut para walut do przedstawienia
+     */
+
     private void initParaWalut(ParaWalut paraWalut){
         list.add("Główna waluta: " + paraWalut.getGlownaWaluta());
         list.add("Druga waluta: " + paraWalut.getDrugaWaluta());
     }
+
+    /**
+     *
+     * @param waluta waluta do przedstawienia
+     */
 
     private void initWaluta(Waluta waluta){
         list.add("Nazwa: " + waluta.getNazwa());
@@ -137,26 +222,51 @@ public class ObjectInformationPreviewController {
         list.addAll(waluta.getKrajePlatnicze());
     }
 
+    /**
+     *
+     * @param podmiotInwestujacy podmiot inwestujacy do przedstawienia
+     */
+
     private void initPodmiotInwestujacy(PodmiotInwestujacy podmiotInwestujacy){
         DeleteButton.setDisable(false);
         list.add("Imie: " + podmiotInwestujacy.getImie());
         list.add("Nazwisko: " + podmiotInwestujacy.getNazwisko());
     }
 
+    /**
+     *
+     * @param funduszInwestycyjny fundusz inwestycyjny do przedstawienia
+     */
+
     private void initFunduszInwestycyjny(FunduszInwestycyjny funduszInwestycyjny){
         list.add("Nazwa: " + funduszInwestycyjny.getNazwa());
     }
+
+    /**
+     *
+     * @param inwestor inwestor do przedstawienia
+     */
 
     private void initInwestor(Inwestor inwestor){
         list.add("PESEL: " + inwestor.getPesel());
         list.add("Budżet: " + inwestor.getBudzet());
     }
 
+    /**
+     *
+     * @param rynek rynek do przedstawienia
+     */
+
     private void initRynek(Rynek rynek){
         list.add("Nazwa: " + rynek.getNazwa());
         list.add("Waluta: " + rynek.getWaluta());
         list.add("Marża procentowa: " + rynek.getMarzaProcentowa() + "%");
     }
+
+    /**
+     *
+     * @param gieldaPapierowWartosciowych gielda do przedstawienia
+     */
 
     private void initGieldaPapierowWartosciowych(GieldaPapierowWartosciowych gieldaPapierowWartosciowych){
         list.add("Kraj: " + gieldaPapierowWartosciowych.getKraj());
@@ -172,6 +282,11 @@ public class ObjectInformationPreviewController {
         }
     }
 
+    /**
+     *
+     * @param rynekWalutowoSurowcowy rynek walutowy do przedstawienia
+     */
+
     private void initRynekWalutowoSurowcowy(RynekWalutowoSurowcowy rynekWalutowoSurowcowy){
         list.add("Lista par walut:");
         for (int i=0; i<rynekWalutowoSurowcowy.getListaParWalut().size();i++){
@@ -183,6 +298,11 @@ public class ObjectInformationPreviewController {
         }
     }
 
+    /**
+     *
+     * @param indeks indeks do przedstawienia
+     */
+
     private void initIndeks(Indeks indeks){
         list.add("Nazwa: " + indeks.getNazwa());
         list.add("Giełda: " + indeks.getGielda());
@@ -192,6 +312,11 @@ public class ObjectInformationPreviewController {
             list.add(indeks.getListaSpolek().get(i).toString());
         }
     }
+
+    /**
+     *
+     * @param indeksNajwiekszychSpolek indeks najwiekszych spolek do przestawienia
+     */
 
     private void initIndeksNajwiekszychSpolek(IndeksNajwiekszychSpolek indeksNajwiekszychSpolek){
         list.add("Ilość spółek: " + indeksNajwiekszychSpolek.getIloscSpolek());

@@ -15,6 +15,13 @@ import java.util.ArrayList;
 public class IndeksNajwiekszychSpolek extends Indeks implements Serializable{
     private int iloscSpolek;
 
+    /**
+     * Konstruktor, jesli ilosc spolek jest wieksza niz maksymalna to jest obcinana do maksimum
+     *
+     * @param gielda gielda notowania
+     * @param iloscSpolek ilosc najwiekszych spolek do uwzglednienia
+     */
+
     public IndeksNajwiekszychSpolek(GieldaPapierowWartosciowych gielda, int iloscSpolek){
         super(gielda,"Top "+iloscSpolek+" "+gielda);
         if (iloscSpolek > gielda.getListaSpolek().size()) {
@@ -25,6 +32,10 @@ public class IndeksNajwiekszychSpolek extends Indeks implements Serializable{
         updateListaSpolek();
         updateLacznaWartosc();
     }
+
+    /**
+     * Znalezienie okreslonej liczby najwiekszych spolek
+     */
 
     private void updateListaSpolek(){
         getListaSpolek().clear();

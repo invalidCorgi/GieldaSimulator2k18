@@ -21,6 +21,9 @@ public class Waluta implements Serializable{
     private static List<String> nazwy = new ArrayList<>(
             Arrays.asList("złoty", "dolar", "euro", "yen", "batat", "bitcoin", "ethereum", "monero")
     );
+    private static List<String> kraje = new ArrayList<>(
+            Arrays.asList("Polska", "Stany", "Nibyladnia", "Nihon", "Węgry", "Austria", "Australia")
+    );
     private RynekWalutowoSurowcowy rynekWalutowoSurowcowy;
 
     /**
@@ -62,6 +65,7 @@ public class Waluta implements Serializable{
         }
         else throw new Exception();
         krajePlatnicze = new ArrayList<>();
+        krajePlatnicze.add(kraje.get(random.nextInt(kraje.size())));
     }
 
     @Override

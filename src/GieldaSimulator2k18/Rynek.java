@@ -18,15 +18,39 @@ public class Rynek implements Serializable{
     private Waluta waluta;
     private double marzaProcentowa;
 
+    /**
+     * Konstruktor ustawiajacy pola oprocz nazwy
+     *
+     * @param random instancja Random
+     * @param waluta waluta rynku do przypisania
+     */
+
     public Rynek(Random random, Waluta waluta) {
         this.waluta = waluta;
         marzaProcentowa = random.nextDouble();
     }
 
+    /**
+     * Konstruktor ze z gory podana nazwa
+     *
+     * @param random instancja Random
+     * @param waluta waluta rynku do przypisania
+     * @param nazwa nazwa do przypisania
+     */
+
     public Rynek(Random random, Waluta waluta, String nazwa) {
         this(random,waluta);
         this.nazwa = nazwa;
     }
+
+    /**
+     * Konstruktor losujacy nazwe z kolekcji
+     *
+     * @param random instancja Random
+     * @param waluta waluta rynku do przypisania
+     * @param nazwy lista nazw, z ktorej bedzie losowana nazwa
+     * @throws Exception
+     */
 
     public Rynek(Random random, Waluta waluta, List<String> nazwy) throws Exception {
         this(random,waluta);

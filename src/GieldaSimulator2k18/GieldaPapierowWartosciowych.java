@@ -24,9 +24,18 @@ public class GieldaPapierowWartosciowych extends Rynek implements Serializable{
     private static List<String> nazwy = new ArrayList<>(
             Arrays.asList("Łol Strit", "Best giełda ever", "Papieladnia dla papierów", "Giełda i edukacja łupi domy arabów (like a WINE)")
     );
+    private static List<String> miasta = new ArrayList<>(
+            Arrays.asList("Warszawa", "Berlin", "Nowy Jork", "Kij wie", "Albo i nie")
+    );
+    private static List<String> adresy = new ArrayList<>(
+            Arrays.asList("Sezamkowa 23", "Wiejska 2", "Miejska 3", "Abrakadabra 15", "Legolasa 9")
+    );
 
     public GieldaPapierowWartosciowych(Random random, Waluta waluta) throws Exception {
         super(random, waluta,nazwy);
+        kraj = waluta.getKrajePlatnicze().get(random.nextInt(waluta.getKrajePlatnicze().size()));
+        miasto = miasta.get(random.nextInt(miasta.size()));
+        adresSiedziby = adresy.get(random.nextInt(adresy.size()));
     }
 
     /**

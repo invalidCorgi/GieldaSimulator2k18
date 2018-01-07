@@ -25,10 +25,22 @@ public class Indeks implements Serializable{
         return nazwa;
     }
 
+    /**
+     *
+     * @param gielda Gielda do ustawienia
+     * @param nazwa nazwa do ustawienia
+     */
+
     public Indeks(GieldaPapierowWartosciowych gielda, String nazwa){
         this.gielda = gielda;
         this.nazwa = nazwa;
     }
+
+    /**
+     *
+     * @param spolkaObservableList wybrana lista spolek do dodania
+     * @param gielda gielda do ustawienia
+     */
 
     public Indeks(ObservableList<Spolka> spolkaObservableList, GieldaPapierowWartosciowych gielda){
         listaSpolek.addAll(spolkaObservableList);
@@ -44,7 +56,12 @@ public class Indeks implements Serializable{
         }
     }
 
+    /**
+     * aktualizacja wartosci indeksu
+     */
+
     protected void updateLacznaWartosc(){
+        lacznaWartosc=0;
         for (int i=0; i<listaSpolek.size(); i++){
             lacznaWartosc+=listaSpolek.get(i).getKursAktualny();
         }
@@ -86,14 +103,6 @@ public class Indeks implements Serializable{
         return lacznaWartosc;
     }
 
-    /**
-     * Sets lacznaWartosc
-     *
-     * @param lacznaWartosc lacznaWartosc to set
-     */
-    public void setLacznaWartosc(double lacznaWartosc) {
-        this.lacznaWartosc = lacznaWartosc;
-    }
 
     /**
      * Gets gielda

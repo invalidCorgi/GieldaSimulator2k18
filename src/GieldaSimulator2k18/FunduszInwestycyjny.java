@@ -23,6 +23,14 @@ public class FunduszInwestycyjny extends PodmiotInwestujacy implements Serializa
             Arrays.asList("Kaszlajda&Obiekty", "Bank Vivaldiego", "Jam jest FUNDUSZ")
     );
 
+    /**
+     * Konstruktor losujący wszystkie pola
+     *
+     * @param random instancja Random
+     * @param swiat swiat symulacji
+     * @throws Exception
+     */
+
     public FunduszInwestycyjny(Random random, Swiat swiat) throws Exception {
         super(random, swiat);
         if (nazwy.size()>0) {
@@ -50,6 +58,16 @@ public class FunduszInwestycyjny extends PodmiotInwestujacy implements Serializa
         this.nazwa = nazwa;
     }
 
+    /**
+     * Nieskończona metoda wątku:
+     * losuje, czy sprzedaje czy kupuje aktywa
+     * jeśli kupuje to szuka możliwego aktywu do kupienia
+     * gdy poszuka próbuje go kupić
+     * jesli sprzedaje to losuje aktywa do sprzedania z posiadanych
+     * jesli cos sie nie uda to powtarza natychmiast petle
+     * gdy operacja jest udana nie robi nic przez 2^10 milisekund
+     */
+
     @Override
     public void run() {
         while (true) {
@@ -57,8 +75,18 @@ public class FunduszInwestycyjny extends PodmiotInwestujacy implements Serializa
                 break;
             }
             logNazwa();
+            if (getRandom().nextInt(2)==0) {
+                Aktywa aktywa = znajdzAktywaDoKupienia();
+                if (aktywa == null)
+                    continue;
+                if (!aktywa.kupAktywa(this))
+                    continue;
+            }
+            else if (getAktywaList().size() > 0){
+                getAktywaList().get(getRandom().nextInt(getAktywaList().size())).sprzedajAktywa(this);
+            }
             try {
-                sleep(1000);
+                sleep(1024);
             } catch (InterruptedException e) {
                 break;
             }

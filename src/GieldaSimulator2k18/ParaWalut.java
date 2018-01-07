@@ -19,8 +19,16 @@ public class ParaWalut extends Aktywa implements Serializable{
     private Waluta glownaWaluta;
     private Waluta drugaWaluta;
 
+    /**
+     * Konstruktor
+     *
+     * @param random instancja Random
+     * @param glownaWaluta waluta za ktora kupuje sie druga walute
+     * @param drugaWaluta kupowana waluta
+     */
+
     public ParaWalut(Random random, Waluta glownaWaluta, Waluta drugaWaluta) {
-        super(random);
+        super(random, glownaWaluta.getRynekWalutowoSurowcowy());
         this.glownaWaluta = glownaWaluta;
         this.drugaWaluta = drugaWaluta;
         setNazwa(drugaWaluta.getNazwa()+"/"+glownaWaluta.getNazwa());
@@ -36,15 +44,6 @@ public class ParaWalut extends Aktywa implements Serializable{
     }
 
     /**
-     * Sets drugaWaluta
-     *
-     * @param drugaWaluta drugaWaluta to set
-     */
-    public void setDrugaWaluta(Waluta drugaWaluta) {
-        this.drugaWaluta = drugaWaluta;
-    }
-
-    /**
      * Gets glownaWaluta
      *
      * @return glownaWaluta
@@ -53,12 +52,4 @@ public class ParaWalut extends Aktywa implements Serializable{
         return glownaWaluta;
     }
 
-    /**
-     * Sets glownaWaluta
-     *
-     * @param glownaWaluta glownaWaluta to set
-     */
-    public void setGlownaWaluta(Waluta glownaWaluta) {
-        this.glownaWaluta = glownaWaluta;
-    }
 }

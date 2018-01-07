@@ -19,6 +19,10 @@ public class MultiLineChartController {
     private ObservableList<Aktywa> listaMain;
     private List<Aktywa> narysowaneAktywa;
 
+    /**
+     * Dodanie wybranego aktywu do wykresu jesli jeszcze go tam nie ma
+     */
+
     @FXML
     private void AddAktywaToChart(){
         Aktywa aktywa = AktywaListView.getSelectionModel().getSelectedItem();
@@ -32,6 +36,12 @@ public class MultiLineChartController {
             AktywaLineChart.getData().add(series);
         }
     }
+
+    /**
+     * Inicjalizacja okna
+     *
+     * @param listaMain lista aktywow z okna glownego
+     */
 
     public void initData(ObservableList<Aktywa> listaMain){
         this.listaMain = listaMain;

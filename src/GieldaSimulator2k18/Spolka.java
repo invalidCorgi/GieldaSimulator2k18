@@ -7,10 +7,7 @@ package GieldaSimulator2k18;
 
 import java.io.Console;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static java.lang.Thread.sleep;
 
@@ -26,7 +23,7 @@ public class Spolka extends Aktywa implements Serializable, Runnable{
     private double kapitalZakladowy;
     private List<Indeks> listaIndeksow;
     private static List<String> nazwy = new ArrayList<>(
-            Arrays.asList("MikroShit", "Ajpul", "BiegaGames", "InvalidCorgiGames", "Ikeła", "Łerla Merlę", "Lydl", "Stonka", "Brutto")
+            Arrays.asList("MikroShit", "Ajpul", "BiegaGames", "InvalidCorgiGames", "Ikeła", "Łerla Merlę", "Lydl", "Stonka", "Brutto", "I Ej Gejms", "Nitendo")
     );
     private Random random;
     private Thread thread;
@@ -41,8 +38,16 @@ public class Spolka extends Aktywa implements Serializable, Runnable{
         return nazwy;
     }
 
+    /**
+     * Konstruktor
+     *
+     * @param random instancja Random
+     * @param gielda gielda do przypisania
+     * @throws Exception
+     */
+
     public Spolka(Random random, GieldaPapierowWartosciowych gielda) throws Exception {
-        super(random, nazwy);
+        super(random, nazwy, gielda);
         this.random = random;
         this.liczbaAkcji = random.nextInt(50)+10;
         this.zysk = 0;
@@ -143,6 +148,11 @@ public class Spolka extends Aktywa implements Serializable, Runnable{
         return gielda;
     }
 
+    /**
+     * Metoda watku:
+     * losowany jest zysk i przychod po czym istnieje szansa na wypuszczenie nowych akcji na gielde
+     */
+
     @Override
     public void run(){
         while (true){
@@ -162,10 +172,13 @@ public class Spolka extends Aktywa implements Serializable, Runnable{
     }
 
     @Override
-    public synchronized boolean kupAktywa(){
-        if (liczbaAkcji==0)
-            return false;
-        super.kupAktywa();
-        return true;
+    public synchronized boolean kupAktywa(PodmiotInwestujacy podmiotInwestujacy) {
+        return liczbaAkcji != 0 && super.kupAktywa(podmiotInwestujacy);
+    }
+
+    @Override
+    public synchronized void sprzedajAktywa(PodmiotInwestujacy podmiotInwestujacy){
+        liczbaAkcji++;
+        super.sprzedajAktywa(podmiotInwestujacy);
     }
 }

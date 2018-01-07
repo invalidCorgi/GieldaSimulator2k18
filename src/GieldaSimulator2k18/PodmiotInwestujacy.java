@@ -19,17 +19,27 @@ public abstract class PodmiotInwestujacy implements Serializable, Runnable {
     private String imie;
     private String nazwisko;
     private Thread thread;
+    private List<Aktywa> aktywaList;
     private static List<String> imiona = new ArrayList<>(
-            Arrays.asList("Obi Wan", "Darek", "Wilczek", "Jan", "Marcin", "Kamil", "Tadeusz", "Mistrz", "Yukki", "Natsume", "Hiruka", "Ookami")
+            Arrays.asList("Obi Wan", "Darek", "Wilczek", "Jan", "Marcin", "Kamil", "Tadeusz", "Mistrz", "Yukki", "Natsume", "Hiruka", "Ookami", "InvalidCorgi")
     );
     private static List<String> nazwiska = new ArrayList<>(
-            Arrays.asList("Kenobi", "Łolstrit", "Domyśl-Się", "Gruszka", "Koszlajda", "Morzy", "Yoda", "Kłoda", "Broda")
+            Arrays.asList("Kenobi", "Łolstrit", "Domyśl-Się", "Gruszka", "Koszlajda", "Morzy", "Yoda", "Kłoda", "Broda", "Smroda", "Trololoda")
     );
     private static List<String> wykorzystywaneImionaNazwiska = new ArrayList<>();
     private Swiat swiat;
     private Random random;
 
+    /**
+     * Konstruktor
+     *
+     * @param random instancja Random
+     * @param swiat swiat symulacji
+     * @throws Exception
+     */
+
     public PodmiotInwestujacy(Random random, Swiat swiat) throws Exception {
+        this.random = random;
         if (wykorzystywaneImionaNazwiska.size() == imiona.size()*nazwiska.size())
             throw new Exception();
         do {
@@ -38,6 +48,7 @@ public abstract class PodmiotInwestujacy implements Serializable, Runnable {
             this.swiat = swiat;
         }while (wykorzystywaneImionaNazwiska.contains(imie + " " + nazwisko));
         wykorzystywaneImionaNazwiska.add(imie + " " + nazwisko);
+        aktywaList = new ArrayList<>();
     }
 
     /**
@@ -103,11 +114,73 @@ public abstract class PodmiotInwestujacy implements Serializable, Runnable {
         this.nazwisko = nazwisko;
     }
 
+    /**
+     * Gets random
+     *
+     * @return random
+     */
+    protected Random getRandom() {
+        return random;
+    }
+
+    /**
+     * Gets swiat
+     *
+     * @return swiat
+     */
+    public Swiat getSwiat() {
+        return swiat;
+    }
+
+    /**
+     * Gets aktywaList
+     *
+     * @return aktywaList
+     */
+    public List<Aktywa> getAktywaList() {
+        return aktywaList;
+    }
+
     protected void logNazwa(){
         System.out.println("Pętla " + imie + " " + nazwisko);
     }
 
+    /**
+     *
+     * @return istniejące aktywa byc moze mozliwe do kupienia, w razie niepowodzenia w szukaniu null
+     */
 
+    protected Aktywa znajdzAktywaDoKupienia(){
+        int rand = random.nextInt(2);
+        if (swiat.getListaGield().size() > 0 && rand==0){
+            GieldaPapierowWartosciowych gielda = swiat.getListaGield().get(random.nextInt(swiat.getListaGield().size()));
+            if (gielda.getListaSpolek().size() > 0){
+                Spolka spolka = gielda.getListaSpolek().get(random.nextInt(gielda.getListaSpolek().size()));
+                if (spolka.getLiczbaAkcji() > 0) {
+                    return spolka;
+                } else {
+                    return null;
+                }
+            }
+            else {
+                return null;
+            }
+        }
+        else if (swiat.getListaRynkowWalutowoSurowcowych().size() > 0 && rand==1){
+            RynekWalutowoSurowcowy rynek = swiat.getListaRynkowWalutowoSurowcowych().get(random.nextInt(swiat.getListaRynkowWalutowoSurowcowych().size()));
+            rand = random.nextInt(2);
+            if (rynek.getListaSurowcow().size() > 0 && rand==0){
+                return rynek.getListaSurowcow().get(random.nextInt(rynek.getListaSurowcow().size()));
+            }
+            else if (rynek.getListaParWalut().size() > 0 && rand==1){
+                return rynek.getListaParWalut().get(random.nextInt(rynek.getListaParWalut().size()));
+            }
+            else {
+                return null;
+            }
+        }
+        return null;
+    }
 
     @Override
     public void run() {

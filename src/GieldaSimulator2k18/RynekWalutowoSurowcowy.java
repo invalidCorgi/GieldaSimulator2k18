@@ -17,6 +17,13 @@ public class RynekWalutowoSurowcowy extends Rynek implements Serializable{
     private ArrayList<ParaWalut> listaParWalut;
     private ArrayList<Surowiec> listaSurowcow;
 
+    /**
+     * Konstruktor
+     *
+     * @param random instancja Random
+     * @param waluta waluta do przypisania
+     */
+
     public RynekWalutowoSurowcowy(Random random, Waluta waluta) {
         super(random,waluta,"Rynek "+waluta);
         listaParWalut = new ArrayList<>();

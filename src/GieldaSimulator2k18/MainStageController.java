@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.Random;
 
+import static java.lang.Thread.sleep;
+
 public class MainStageController {
     @FXML
     private Button OpenControlPanelButton;
@@ -29,7 +31,7 @@ public class MainStageController {
     private ObservableList<Aktywa> list;
 
     /**
-     *
+     * Otwarcie panelu kontrolnego
      *
      * @throws IOException
      */
@@ -49,6 +51,13 @@ public class MainStageController {
         stage.show();
     }
 
+    /**
+     * Otwarcie okna z informacjami o obiekcie
+     *
+     * @throws IOException
+     * @throws InterruptedException
+     */
+
     @FXML
     private void ShowElementInformation() throws IOException, InterruptedException {
         if (MainListView.getSelectionModel().getSelectedItem()!=null) {
@@ -67,22 +76,39 @@ public class MainStageController {
         }
     }
 
+    /**
+     * Serializacja swiata po wczesniejszym zatrzymaniu symulacji i pozniejszym wznowieniu jej
+     */
+
     @FXML
-    private void SerializeSwiat() throws IOException {
+    private void SerializeSwiat() {
         try {
+            Main.zatrymajSymulacje(swiat);
+            sleep(200);
             ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(SerializationFilename.getText()));
             outputStream.writeObject(swiat);
             outputStream.flush();
             outputStream.close();
-        }
-        catch (IOException ex){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION,"Wystąpił problem przy zapisie stanu giełdy");
+            for (int i=0; i<swiat.getListaSpolek().size(); i++)
+                swiat.getListaSpolek().get(i).getThread().start();
+            for (int i=0; i<swiat.getListaInwestorow().size(); i++)
+                swiat.getListaInwestorow().get(i).getThread().start();
+            for (int i=0; i<swiat.getListaFunduszyInwestycyjnych().size(); i++)
+                swiat.getListaFunduszyInwestycyjnych().get(i).getThread().start();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Wystąpił nieznany błąd");
             alert.show();
         }
     }
 
+    /**
+     * deserializacja swiata i uruchomienie symulacji
+     */
+
     @FXML
-    private void DeserializeSwiat() throws IOException, ClassNotFoundException {
+    private void DeserializeSwiat() {
         try {
             ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(SerializationFilename.getText()));
             swiat = (Swiat) inputStream.readObject();
@@ -90,6 +116,9 @@ public class MainStageController {
             list.clear();
             for (int i = 0; i < swiat.getListaSpolek().size(); i++) {
                 list.add(swiat.getListaSpolek().get(i));
+                Thread thread = new Thread(swiat.getListaSpolek().get(i));
+                swiat.getListaSpolek().get(i).setThread(thread);
+                thread.start();
                 Spolka.getNazwy().remove(swiat.getListaSpolek().get(i).getNazwa());
             }
             for (int i = 0; i < swiat.getListaSurowcow().size(); i++) {
@@ -129,6 +158,12 @@ public class MainStageController {
         }
     }
 
+    /**
+     * Otwarcie okna z mozliwoscia narysowania wielu wykresow procentowych
+     *
+     * @throws IOException
+     */
+
     @FXML
     private void OpenMultiLineChart() throws IOException {
         Stage stage = new Stage();
@@ -144,23 +179,16 @@ public class MainStageController {
         stage.show();
     }
 
-    @FXML
-    private void zamknijSymulacje(){
-        for (int i=0; i<swiat.getListaFunduszyInwestycyjnych().size();i++){
-            swiat.getListaFunduszyInwestycyjnych().get(i).getThread().interrupt();
-        }
-        for (int i=0; i<swiat.getListaInwestorow().size();i++){
-            swiat.getListaInwestorow().get(i).getThread().interrupt();
-        }
-        for (int i=0; i<swiat.getListaSpolek().size(); i++){
-            swiat.getListaSpolek().get(i).getThread().interrupt();
-        }
-    }
+    /**
+     * Inicjalizacja glownego okna programu
+     *
+     * @param swiat swiat symulacji
+     */
 
-    public void initData(){
+    public void initData(Swiat swiat){
         list = FXCollections.observableArrayList();
         MainListView.setItems(list);
-        swiat = new Swiat();
+        this.swiat = swiat;
         random = new Random();
     }
 }

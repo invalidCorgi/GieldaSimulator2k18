@@ -21,6 +21,14 @@ public class ControlPanelController {
     private Random random;
     private Swiat swiat;
 
+    /**
+     * Inicjalizacja panelu kontrolnego umożliwiającego dodawanie obiektów do symulacji i lista obiektów z możliwością podglądu informacji i usunięcia
+     *
+     * @param swiat swiat symulacji
+     * @param listaMain lista aktywów w głównym oknie
+     * @param random instancja Random do losowania pól przy tworzeniu obiektów
+     */
+
     public void initData(Swiat swiat, ObservableList<Aktywa> listaMain, Random random){
         this.swiat = swiat;
         this.random = random;
@@ -38,6 +46,10 @@ public class ControlPanelController {
 
         MainListView.setItems(lista);
     }
+
+    /**
+     * Dodanie giełdy do symulacji
+     */
 
     @FXML
     private void dodajGielde(){
@@ -58,6 +70,12 @@ public class ControlPanelController {
         }
     }
 
+    /**
+     * Otwarcie okna dodawania indeksu
+     *
+     * @throws IOException
+     */
+
     @FXML
     private void dodajIndeks() throws IOException {
         Stage stage = new Stage();
@@ -72,6 +90,10 @@ public class ControlPanelController {
 
         stage.show();
     }
+
+    /**
+     * Dodanie waluty i jej rynku a także par walut na istniejących rynkach i nowotworzonym
+     */
 
     @FXML
     private void dodajWalute(){
@@ -111,6 +133,10 @@ public class ControlPanelController {
         }
     }
 
+    /**
+     * Dodanie spółki do losowej giełdy, uruchomienie jej wątku, dodanie podmiotu inwestującego, uruchomienie jego wątku
+     */
+
     @FXML
     private void dodajSpolke(){
         if (swiat.getListaGield().size()==0){
@@ -122,6 +148,12 @@ public class ControlPanelController {
                 GieldaPapierowWartosciowych gielda = swiat.getListaGield().get(random.nextInt(swiat.getListaGield().size()));
                 Spolka spolka = new Spolka(random, gielda);
                 gielda.getListaSpolek().add(spolka);
+                try {
+                    stworzPodmiotInwestujacy();
+                }
+                catch (Exception ignored){
+
+                }
                 Thread thread = new Thread(spolka);
                 spolka.setThread(thread);
                 thread.start();
@@ -135,6 +167,10 @@ public class ControlPanelController {
             }
         }
     }
+
+    /**
+     * Dodanie surowca do losowego rynku, dodanie podmiotu inwestującego i uruchomienie jego wątku
+     */
 
     @FXML
     private void dodajSurowiec(){
@@ -169,6 +205,12 @@ public class ControlPanelController {
         }
     }
 
+    /**
+     * Otworzenie okna z informacjami o obiekcie
+     *
+     * @throws IOException
+     */
+
     @FXML
     private void ShowElementInformation() throws IOException {
         if (MainListView.getSelectionModel().getSelectedItem()!=null) {
@@ -186,6 +228,11 @@ public class ControlPanelController {
             stage.show();
         }
     }
+
+    /**
+     * Stworzenie podmiotu inwestującego i uruchomienie jego wątku
+     * @throws Exception
+     */
 
     private void stworzPodmiotInwestujacy() throws Exception {
         PodmiotInwestujacy podmiotInwestujacy;

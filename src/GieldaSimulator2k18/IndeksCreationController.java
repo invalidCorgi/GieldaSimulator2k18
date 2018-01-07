@@ -32,6 +32,10 @@ public class IndeksCreationController {
 
     }
 
+    /**
+     * stworz indeks wybranych lub najwiekszych spolek w zaleznosci od zaznaczenia checkboxa
+     */
+
     @FXML
     private void stworzIndeks(){
         if (wybranaGielda != null){
@@ -54,6 +58,10 @@ public class IndeksCreationController {
         }
     }
 
+    /**
+     * pokaz spolki gieldy po jej wybraniu
+     */
+
     @FXML
     private void wybierzGielde(){
         GieldaPapierowWartosciowych gielda = gieldyListView.getSelectionModel().getSelectedItem();
@@ -65,6 +73,10 @@ public class IndeksCreationController {
         }
     }
 
+    /**
+     * dodaj do wybranych spolek kliknieta na listboxie
+     */
+
     @FXML
     private void wybierzSpolke(){
         Spolka spolka = spolkiListView.getSelectionModel().getSelectedItem();
@@ -73,6 +85,10 @@ public class IndeksCreationController {
         }
     }
 
+    /**
+     * odznacz spolke wybrana z listboxa wybranych spolek
+     */
+
     @FXML
     private void odznaczSpolke(){
         Spolka spolka = wybraneSpolkiListView.getSelectionModel().getSelectedItem();
@@ -80,6 +96,13 @@ public class IndeksCreationController {
             wybraneSpolkiListViewObservableList.remove(spolka);
         }
     }
+
+    /**
+     * Inicjalizacja okna tworzenia indeksów
+     *
+     * @param swiat swiat symulacji
+     * @param objectObservableList lista obiektow z panelu kontrolnego
+     */
 
     public void initData(Swiat swiat, ObservableList<Object> objectObservableList){
         this.swiat = swiat;

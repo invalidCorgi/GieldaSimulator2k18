@@ -31,11 +31,6 @@
          <children>
             <HBox alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#zamknijSymulacje" text="Wyłącz symulację">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                  </Button>
                   <Button fx:id="OpenControlPanelButton" mnemonicParsing="false" onAction="#OpenControlPanel" text="Panel kontrolny">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
