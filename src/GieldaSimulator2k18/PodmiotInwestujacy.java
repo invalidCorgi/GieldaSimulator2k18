@@ -27,6 +27,7 @@ public abstract class PodmiotInwestujacy implements Serializable, Runnable {
     );
     private static List<String> wykorzystywaneImionaNazwiska = new ArrayList<>();
     private Swiat swiat;
+    private Random random;
 
     public PodmiotInwestujacy(Random random, Swiat swiat) throws Exception {
         if (wykorzystywaneImionaNazwiska.size() == imiona.size()*nazwiska.size())
@@ -102,9 +103,15 @@ public abstract class PodmiotInwestujacy implements Serializable, Runnable {
         this.nazwisko = nazwisko;
     }
 
+    protected void logNazwa(){
+        System.out.println("Pętla " + imie + " " + nazwisko);
+    }
+
+
+
     @Override
     public void run() {
-        System.out.println("petla2");
+
     }
 
     @Override

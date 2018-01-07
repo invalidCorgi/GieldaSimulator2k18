@@ -56,7 +56,7 @@ public class FunduszInwestycyjny extends PodmiotInwestujacy implements Serializa
             if (getThread().isInterrupted()) {
                 break;
             }
-            super.run();
+            logNazwa();
             try {
                 sleep(1000);
             } catch (InterruptedException e) {

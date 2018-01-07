@@ -17,6 +17,10 @@ public class IndeksNajwiekszychSpolek extends Indeks implements Serializable{
 
     public IndeksNajwiekszychSpolek(GieldaPapierowWartosciowych gielda, int iloscSpolek){
         super(gielda,"Top "+iloscSpolek+" "+gielda);
+        if (iloscSpolek > gielda.getListaSpolek().size()) {
+            iloscSpolek = gielda.getListaSpolek().size();
+            setNazwa("Top " + iloscSpolek + " " + gielda);
+        }
         this.iloscSpolek = iloscSpolek;
         updateListaSpolek();
         updateLacznaWartosc();

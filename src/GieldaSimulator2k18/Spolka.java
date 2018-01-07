@@ -152,12 +152,20 @@ public class Spolka extends Aktywa implements Serializable, Runnable{
             przychod = zysk + random.nextDouble()*1000000;
             if (random.nextInt(4)==0)
                 liczbaAkcji++;
-            System.out.println("petla");
+            System.out.println("Pętla " + getNazwa());
             try {
                 sleep(1000);
             } catch (InterruptedException e) {
                 break;
             }
         }
+    }
+
+    @Override
+    public synchronized boolean kupAktywa(){
+        if (liczbaAkcji==0)
+            return false;
+        super.kupAktywa();
+        return true;
     }
 }

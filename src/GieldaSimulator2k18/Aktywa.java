@@ -228,4 +228,39 @@ public abstract class Aktywa implements Serializable{
         this.liczbaSprzedajacych = liczbaSprzedajacych;
     }
 
+    public synchronized boolean kupAktywa(){
+        historiaKursu.add(new WpisHistorii(LocalDateTime.now(),kursAktualny));
+        liczbaKupujacych++;
+        przeliczKurs();
+        return true;
+    }
+
+    public synchronized void sprzedajAktywa(){
+        historiaKursu.add(new WpisHistorii(LocalDateTime.now(), kursAktualny));
+        liczbaSprzedajacych++;
+        przeliczKurs();
+    }
+
+    private synchronized void przeliczKurs(){
+        if (liczbaKupujacych == liczbaSprzedajacych){
+            kursAktualny=kursOtwarcia;
+        }
+        if (liczbaKupujacych > liczbaSprzedajacych){
+            if (liczbaSprzedajacych==0){
+                kursAktualny = kursAktualny*Math.pow(1.1, liczbaKupujacych);
+            }
+            else {
+                kursAktualny = kursAktualny*liczbaKupujacych/liczbaSprzedajacych;
+            }
+        }
+        if (liczbaSprzedajacych > liczbaKupujacych){
+            if (liczbaKupujacych == 0){
+                kursAktualny = kursAktualny*Math.pow(0.9, liczbaSprzedajacych);
+            }
+            else {
+                kursAktualny = kursAktualny*liczbaSprzedajacych/liczbaKupujacych;
+            }
+        }
+    }
+
 }

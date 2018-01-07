@@ -70,7 +70,7 @@ public class Inwestor extends PodmiotInwestujacy implements Serializable{
             if (getThread().isInterrupted()){
                 break;
             }
-            super.run();
+            logNazwa();
             try {
                 sleep(1000);
             } catch (InterruptedException e) {
